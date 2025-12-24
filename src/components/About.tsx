@@ -2,8 +2,68 @@
 
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { User, Target, Rocket } from "lucide-react";
+import { User, Target, Rocket, LucideIcon } from "lucide-react";
 import { personalInfo } from "@/config/personalInfo";
+import { useCountUp } from "@/hooks/useCountUp";
+
+// Stat Card Component
+function StatCard({
+  icon: Icon,
+  label,
+  value,
+  suffix,
+  index,
+  isInView,
+}: {
+  icon: LucideIcon;
+  label: string;
+  value: number;
+  suffix: string;
+  index: number;
+  isInView: boolean;
+}) {
+  const countValue = useCountUp({
+    end: value,
+    suffix: suffix,
+    enabled: isInView,
+    duration: 2000,
+  });
+
+  return (
+    <motion.div
+      className="text-center p-3 sm:p-4 md:p-6 rounded-lg bg-white/5 border border-white/10 relative overflow-hidden group"
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+      transition={{ delay: index * 0.1 + 0.3, duration: 0.6 }}
+      whileHover={{ scale: 1.1, y: -5, borderColor: "#B3F1AA" }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-[#B3F1AA]/20 to-[#B3F1AA]/20 opacity-0 group-hover:opacity-100 transition-opacity"
+      />
+      <motion.div
+        animate={{
+          rotate: [0, 10, -10, 0],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          repeatDelay: 2,
+        }}
+      >
+        <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mx-auto mb-2 sm:mb-3 text-white relative z-10" />
+      </motion.div>
+      <motion.div
+        className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2 relative z-10"
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ delay: index * 0.1 + 0.5 }}
+      >
+        {countValue}
+      </motion.div>
+      <div className="text-xs sm:text-sm text-gray-400 relative z-10 leading-tight">{label}</div>
+    </motion.div>
+  );
+}
 
 export default function About() {
   const ref = useRef(null);
@@ -39,9 +99,9 @@ export default function About() {
   };
 
   const stats = [
-    { icon: User, label: "Projects Completed", value: "50+", color: "from-blue-500/20 to-purple-500/20" },
-    { icon: Target, label: "Satisfied Clients", value: "30+", color: "from-purple-500/20 to-pink-500/20" },
-    { icon: Rocket, label: "Years of Experience", value: "5+", color: "from-pink-500/20 to-red-500/20" },
+    { icon: User, label: "Projects Completed", value: 50, suffix: "+", color: "from-blue-500/20 to-purple-500/20" },
+    { icon: Target, label: "Satisfied Clients", value: 30, suffix: "+", color: "from-purple-500/20 to-pink-500/20" },
+    { icon: Rocket, label: "Years of Experience", value: 5, suffix: "+", color: "from-pink-500/20 to-red-500/20" },
   ];
 
   return (
@@ -84,44 +144,17 @@ export default function About() {
               variants={itemVariants}
               className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6 order-1 md:order-2 mb-8 md:mb-0"
             >
-              {stats.map((stat, index) => {
-                const Icon = stat.icon;
-                return (
-                  <motion.div
-                    key={stat.label}
-                    className="text-center p-3 sm:p-4 md:p-6 rounded-lg bg-white/5 border border-white/10 relative overflow-hidden group"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                    transition={{ delay: index * 0.1 + 0.3, duration: 0.6 }}
-                    whileHover={{ scale: 1.1, y: -5, borderColor: "#B3F1AA" }}
-                  >
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-[#B3F1AA]/20 to-[#B3F1AA]/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                    />
-                    <motion.div
-                      animate={{
-                        rotate: [0, 10, -10, 0],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        repeatDelay: 2,
-                      }}
-                    >
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mx-auto mb-2 sm:mb-3 text-white relative z-10" />
-                    </motion.div>
-                    <motion.div
-                      className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2 relative z-10"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                      transition={{ delay: index * 0.1 + 0.5 }}
-                    >
-                      {stat.value}
-                    </motion.div>
-                    <div className="text-xs sm:text-sm text-gray-400 relative z-10 leading-tight">{stat.label}</div>
-                  </motion.div>
-                );
-              })}
+              {stats.map((stat, index) => (
+                <StatCard
+                  key={stat.label}
+                  icon={stat.icon}
+                  label={stat.label}
+                  value={stat.value}
+                  suffix={stat.suffix}
+                  index={index}
+                  isInView={isInView}
+                />
+              ))}
             </motion.div>
           </div>
 
