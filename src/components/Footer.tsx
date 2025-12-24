@@ -17,16 +17,23 @@ export default function Footer() {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <p className="text-gray-400 flex items-center justify-center gap-2">
-            © {currentYear} {personalInfo.name} {personalInfo.fullName}. Made with{" "}
-            <motion.span
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1, repeat: Infinity }}
-            >
-              <Heart className="w-4 h-4 text-red-500 fill-red-500" />
-            </motion.span>{" "}
-            in Vietnam
-          </p>
+          <div className="text-gray-400 text-sm sm:text-base px-4 space-y-2">
+            <p>© {currentYear} {personalInfo.name}. All rights reserved.</p>
+            <p className="flex items-center justify-center gap-1 sm:gap-2">
+              <span>Made with</span>
+              <motion.span
+                style={{
+                  willChange: "transform",
+                  transform: "translate3d(0, 0, 0)",
+                }}
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity }}
+              >
+                <Heart className="w-4 h-4 text-red-500 fill-red-500" />
+              </motion.span>
+              <span>by {personalInfo.name}</span>
+            </p>
+          </div>
         </motion.div>
       </div>
     </footer>

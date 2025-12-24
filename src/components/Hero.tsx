@@ -58,8 +58,12 @@ export default function Hero() {
       {/* Animated Background Elements with Parallax */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          style={{ y }}
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl"
+          style={{ 
+            y,
+            willChange: "transform",
+            transform: "translate3d(0, 0, 0)",
+          }}
+          className="absolute top-1/4 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-white/5 rounded-full blur-2xl sm:blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             x: [0, 50, 0],
@@ -72,8 +76,12 @@ export default function Hero() {
           }}
         />
         <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "30%"]) }}
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl"
+          style={{ 
+            y: useTransform(scrollYProgress, [0, 1], ["0%", "30%"]),
+            willChange: "transform",
+            transform: "translate3d(0, 0, 0)",
+          }}
+          className="absolute bottom-1/4 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-white/5 rounded-full blur-2xl sm:blur-3xl"
           animate={{
             scale: [1, 1.3, 1],
             x: [0, -50, 0],
@@ -88,7 +96,12 @@ export default function Hero() {
       </div>
 
       <motion.div
-        style={{ y, opacity }}
+        style={{ 
+          y, 
+          opacity,
+          willChange: "transform, opacity",
+          transform: "translate3d(0, 0, 0)",
+        }}
         className="container-custom section-padding relative z-10 text-center"
         variants={containerVariants}
         initial="hidden"
@@ -100,6 +113,10 @@ export default function Hero() {
           whileHover={{ scale: 1.05, borderColor: "#B3F1AA" }}
         >
           <motion.div
+            style={{
+              willChange: "transform",
+              transform: "translate3d(0, 0, 0)",
+            }}
             animate={{ rotate: [0, 360] }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
@@ -177,6 +194,10 @@ export default function Hero() {
           <motion.a
             href="#about"
             className="flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-colors group"
+            style={{
+              willChange: "transform",
+              transform: "translate3d(0, 0, 0)",
+            }}
             animate={{ y: [0, 10, 0] }}
             transition={{
               duration: 2,

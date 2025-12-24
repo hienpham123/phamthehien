@@ -60,6 +60,10 @@ export default function Skills() {
         <div className="relative overflow-hidden">
           <motion.div
             className="flex gap-6"
+            style={{
+              willChange: "transform",
+              transform: "translate3d(0, 0, 0)",
+            }}
             animate={
               isInView
                 ? {
@@ -82,6 +86,7 @@ export default function Skills() {
                   style={{
                     backgroundColor: skill.bgColor,
                     color: skill.textColor,
+                    willChange: "auto",
                   }}
                   title={skill.name}
                 >

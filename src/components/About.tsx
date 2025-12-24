@@ -41,6 +41,10 @@ function StatCard({
         className="absolute inset-0 bg-gradient-to-br from-[#B3F1AA]/20 to-[#B3F1AA]/20 opacity-0 group-hover:opacity-100 transition-opacity"
       />
       <motion.div
+        style={{
+          willChange: "transform",
+          transform: "translate3d(0, 0, 0)",
+        }}
         animate={{
           rotate: [0, 10, -10, 0],
         }}
@@ -107,7 +111,12 @@ export default function About() {
   return (
     <section ref={ref} id="about" className="py-12 sm:py-20 md:py-32 relative overflow-hidden">
       <motion.div
-        style={{ y, opacity }}
+        style={{ 
+          y, 
+          opacity,
+          willChange: "transform, opacity",
+          transform: "translate3d(0, 0, 0)",
+        }}
         className="container-custom section-padding"
       >
         <motion.div

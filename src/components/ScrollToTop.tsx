@@ -16,7 +16,7 @@ export default function ScrollToTop() {
       }
     };
 
-    window.addEventListener("scroll", toggleVisibility);
+    window.addEventListener("scroll", toggleVisibility, { passive: true });
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
@@ -35,7 +35,11 @@ export default function ScrollToTop() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0 }}
           onClick={scrollToTop}
-          className="fixed bottom-24 right-6 z-50 p-3 rounded-full bg-[#B3F1AA] text-black shadow-lg hover:shadow-xl transition-shadow"
+          className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 z-50 p-2.5 sm:p-3 rounded-full bg-[#B3F1AA] text-black shadow-lg hover:shadow-xl transition-shadow touch-manipulation"
+          style={{
+            willChange: "transform",
+            transform: "translate3d(0, 0, 0)",
+          }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           aria-label="Scroll to top"

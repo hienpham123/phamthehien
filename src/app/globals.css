@@ -55,3 +55,64 @@ html {
   background: #555;
 }
 
+/* Performance optimizations for mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* GPU acceleration for animations */
+[data-framer-component] {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  /* Reduce blur effects on mobile for better performance */
+  .blur-3xl {
+    filter: blur(40px);
+  }
+  
+  /* Optimize transforms */
+  [style*="transform"] {
+    will-change: transform;
+  }
+
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Better touch targets */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Fix viewport issues */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+}
+
+/* Fix for iOS Safari viewport */
+@supports (-webkit-touch-callout: none) {
+  .min-h-screen {
+    min-height: -webkit-fill-available;
+  }
+}
+

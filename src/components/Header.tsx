@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent, useTransform } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { personalInfo } from "@/config/personalInfo";
 
@@ -17,14 +17,34 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
-  const { scrollY } = useScroll();
+  const rafRef = useRef<number>();
+  const lastScrollY = useRef(0);
 
   // Transform scroll progress to percentage (0-100%)
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > 50);
-  });
+  // Throttled scroll handler for better mobile performance
+  useEffect(() => {
+    const handleScroll = () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+      
+      rafRef.current = requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        setIsScrolled(currentScrollY > 50);
+        lastScrollY.current = currentScrollY;
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, []);
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -189,7 +209,11 @@ export default function Header() {
       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/10">
         <motion.div
           className="h-full bg-[#B3F1AA]"
-          style={{ width: progressWidth }}
+          style={{ 
+            width: progressWidth,
+            willChange: "width",
+            transform: "translate3d(0, 0, 0)",
+          }}
         />
       </div>
     </motion.header>
