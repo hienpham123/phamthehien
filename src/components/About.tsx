@@ -31,40 +31,49 @@ function StatCard({
 
   return (
     <motion.div
-      className="text-center p-3 sm:p-4 md:p-6 rounded-lg bg-white/5 border border-white/10 relative overflow-hidden group"
+      className="text-center p-3 sm:p-4 md:p-6 rounded border-2 border-[#00ff00]/30 bg-black/50 backdrop-blur-sm relative overflow-hidden group font-mono"
+      style={{
+        boxShadow: "0 0 20px rgba(0, 255, 0, 0.1)",
+      }}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
       transition={{ delay: index * 0.1 + 0.3, duration: 0.6 }}
-      whileHover={{ scale: 1.1, y: -5, borderColor: "#B3F1AA" }}
+      whileHover={{ 
+        scale: 1.05, 
+        y: -5, 
+        borderColor: "#00ff00",
+        boxShadow: "0 0 30px rgba(0, 255, 0, 0.3)",
+      }}
     >
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-[#B3F1AA]/20 to-[#B3F1AA]/20 opacity-0 group-hover:opacity-100 transition-opacity"
+        className="absolute inset-0 bg-gradient-to-br from-[#00ff00]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
       />
       <motion.div
         style={{
-          willChange: "transform",
+          willChange: "auto",
           transform: "translate3d(0, 0, 0)",
         }}
         animate={{
-          rotate: [0, 10, -10, 0],
+          rotate: [0, 8, -8, 0],
         }}
         transition={{
-          duration: 2,
+          duration: 3,
           repeat: Infinity,
-          repeatDelay: 2,
+          repeatDelay: 3,
+          ease: "easeInOut",
         }}
       >
-        <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mx-auto mb-2 sm:mb-3 text-white relative z-10" />
+        <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mx-auto mb-2 sm:mb-3 text-[#00ff00] relative z-10" />
       </motion.div>
       <motion.div
-        className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2 relative z-10"
+        className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2 relative z-10 text-[#00ff00]"
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ delay: index * 0.1 + 0.5 }}
       >
         {countValue}
       </motion.div>
-      <div className="text-xs sm:text-sm text-gray-400 relative z-10 leading-tight">{label}</div>
+      <div className="text-xs sm:text-sm text-white/70 relative z-10 leading-tight">{label}</div>
     </motion.div>
   );
 }
@@ -125,26 +134,30 @@ export default function About() {
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.div variants={itemVariants} className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">
-              About
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 font-mono text-[#00ff00]">
+              $ const about = require(&apos;./about.ts&apos;)
             </h2>
             <motion.div
-              className="w-24 h-1 bg-[#B3F1AA] mx-auto"
+              className="w-24 h-1 bg-[#00ff00] mx-auto"
               initial={{ width: 0 }}
               animate={isInView ? { width: 96 } : { width: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             />
+            <p className="text-gray-400 text-sm sm:text-base mt-4 font-mono">{'// Personal information terminal'}</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center mb-8 sm:mb-12 md:mb-16">
             <motion.div variants={itemVariants} className="order-2 md:order-1">
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6">
+              <div className="mb-4 font-mono text-[#00ff00] text-sm">
+                $ cat about.txt
+              </div>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-white">
                 {personalInfo.title}
               </h3>
-              <p className="text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4">
+              <p className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4 pl-4 border-l-2 border-[#00ff00]/30">
                 {personalInfo.about.paragraph1}
               </p>
-              <p className="text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed">
+              <p className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed pl-4 border-l-2 border-[#00ff00]/30">
                 {personalInfo.about.paragraph2}
               </p>
             </motion.div>
@@ -187,17 +200,25 @@ export default function About() {
             ].map((item, index) => (
               <motion.div
                 key={item.title}
-                className="p-6 rounded-lg bg-white/5 border border-white/10 hover:border-[#B3F1AA]/50 hover:bg-white/10 transition-colors relative overflow-hidden group"
+                className="p-6 rounded border-2 border-[#00ff00]/30 bg-black/50 backdrop-blur-sm hover:border-[#00ff00] transition-all relative overflow-hidden group font-mono"
+                style={{
+                  boxShadow: "0 0 20px rgba(0, 255, 0, 0.1)",
+                }}
                 initial={{ opacity: 0, y: 50 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
                 transition={{ delay: index * 0.15 + 0.4, duration: 0.6 }}
-                whileHover={{ y: -8, scale: 1.02 }}
+                whileHover={{ 
+                  y: -8, 
+                  scale: 1.02,
+                  boxShadow: "0 0 30px rgba(0, 255, 0, 0.3)",
+                }}
               >
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-[#B3F1AA]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute inset-0 bg-gradient-to-br from-[#00ff00]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
                 />
-                <h4 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 relative z-10">{item.title}</h4>
-                <p className="text-sm sm:text-base text-gray-400 relative z-10 leading-relaxed">{item.description}</p>
+                <div className="text-[#00ff00] text-xs mb-2">$ console.log(&apos;{item.title}&apos;)</div>
+                <h4 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 relative z-10 text-white">{item.title}</h4>
+                <p className="text-sm sm:text-base text-white/70 relative z-10 leading-relaxed pl-4 border-l-2 border-[#00ff00]/20">{item.description}</p>
               </motion.div>
             ))}
           </motion.div>

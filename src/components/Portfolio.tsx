@@ -90,17 +90,17 @@ function ProjectCard({
   // Xen kẽ background: light green (chẵn) và trắng (lẻ)
   const isGreen = index % 2 === 0;
   const bgColor = isGreen ? "#B9F7A5" : "#FFFFFF";
-  const textColor = isGreen ? "#000000" : "#000000"; // Dark text for both
-  const numberColor = isGreen ? "rgba(0, 0, 0, 0.2)" : "rgba(0, 0, 0, 0.15)";
+  const textColor = isGreen ? "#000000" : "#000000"; // Pure black for better contrast
+  const numberColor = isGreen ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0.25)";
 
   return (
     <div
       style={{
         position: "sticky",
         top: 0,
-        height: "100vh",
+        height: "90vh",
         zIndex: index + 1,
-        marginTop: index === 0 ? "0" : "-10vh",
+        marginTop: index === 0 ? "0" : "6vh",
       }}
       className="flex items-center"
     >
@@ -110,7 +110,7 @@ function ProjectCard({
           rotate: rotation,
           backgroundColor: bgColor,
           borderRadius: "16px 30px 30px 46px" ,
-          padding: "clamp(20px, 4vw, 28px)",
+          padding: "clamp(16px, 3vw, 24px)",
           boxShadow: "0 40px 120px rgba(0, 0, 0, 0.35)",
           willChange: "transform",
           backfaceVisibility: "hidden",
@@ -122,65 +122,94 @@ function ProjectCard({
         }}
         className="w-full max-w-xl mx-auto"
       >
-        <div className="space-y-4">
-          {/* Number & Title - Editorial Layout */}
+        <div className="space-y-3">
+          {/* Terminal Header */}
+          <div className="flex items-center gap-2 mb-2 pb-2 border-b" style={{ borderColor: isGreen ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0.25)" }}>
+            <span className="text-xs font-mono font-semibold" style={{ color: isGreen ? "#004400" : "#1a1a1a" }}>
+              $ const project_{String(index + 1).padStart(2, "0")}: IProject = {'{'}
+            </span>
+          </div>
+
+          {/* Number & Title - Terminal Layout */}
           <div className="flex items-start gap-3">
             <span
               style={{
                 fontSize: "clamp(1.5rem, 4vw, 2rem)",
-                fontWeight: 700,
-                color: numberColor,
+                fontWeight: 800,
+                color: isGreen ? "#004400" : "#1a1a1a",
                 lineHeight: 1,
-                fontFamily: "inherit",
+                fontFamily: "monospace",
               }}
             >
               {String(index + 1).padStart(2, "0")}
             </span>
-            <h3
-              style={{
-                fontSize: "clamp(1.125rem, 3vw, 1.5rem)",
-                fontWeight: 700,
-                color: textColor,
-                lineHeight: 1.2,
-                marginTop: "0.25rem",
-              }}
-            >
-              {project.title}
-            </h3>
-          </div>
-
-          {/* Description - Editorial Style */}
-          <p
-            style={{
-              color: textColor,
-              fontSize: "clamp(0.75rem, 2vw, 0.875rem)",
-              lineHeight: 1.7,
-              opacity: 0.85,
-              marginTop: "0.5rem",
-            }}
-          >
-            {project.description}
-          </p>
-
-          {/* Tech Stack - Minimal Style */}
-          <div className="flex flex-wrap gap-2 mt-4">
-            {project.tech.map((tech: string) => (
-              <span
-                key={tech}
+            <div>
+              <div className="text-xs font-mono mb-1 font-semibold" style={{ color: isGreen ? "#004400" : "#1a1a1a" }}>
+                title:
+              </div>
+              <h3
                 style={{
-                  padding: "4px 8px",
-                  borderRadius: "16px",
-                  fontSize: "clamp(0.625rem, 1.5vw, 0.6875rem)",
-                  backgroundColor: isGreen 
-                    ? "rgba(0, 0, 0, 0.08)" 
-                    : "rgba(0, 0, 0, 0.06)",
+                  fontSize: "clamp(1.125rem, 3vw, 1.5rem)",
+                  fontWeight: 800,
                   color: textColor,
-                  border: `1px solid ${isGreen ? "rgba(0, 0, 0, 0.12)" : "rgba(0, 0, 0, 0.1)"}`,
+                  lineHeight: 1.2,
+                  fontFamily: "monospace",
+                  textShadow: isGreen ? "none" : "0 1px 2px rgba(0, 0, 0, 0.1)",
                 }}
               >
-                {tech}
-              </span>
-            ))}
+                {project.title}
+              </h3>
+            </div>
+          </div>
+
+          {/* Description - Terminal Style */}
+          <div>
+            <div className="text-xs font-mono mb-1 font-semibold" style={{ color: isGreen ? "#004400" : "#1a1a1a" }}>
+              description:
+            </div>
+            <p
+              style={{
+                color: textColor,
+                fontSize: "clamp(0.75rem, 2vw, 0.875rem)",
+                lineHeight: 1.6,
+                opacity: 1,
+                fontWeight: 500,
+                marginTop: "0.5rem",
+                fontFamily: "monospace",
+                paddingLeft: "1rem",
+                borderLeft: `2px solid ${isGreen ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0.25)"}`,
+              }}
+            >
+              {project.description}
+            </p>
+          </div>
+
+          {/* Tech Stack - Terminal Style */}
+          <div className="mt-3">
+            <div className="text-xs font-mono mb-2 font-semibold" style={{ color: isGreen ? "#004400" : "#1a1a1a" }}>
+              techStack:
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {project.tech.map((tech: string) => (
+                <span
+                  key={tech}
+                  style={{
+                    padding: "4px 8px",
+                    borderRadius: "4px",
+                    fontSize: "clamp(0.625rem, 1.5vw, 0.6875rem)",
+                    backgroundColor: isGreen 
+                      ? "rgba(0, 0, 0, 0.12)" 
+                      : "rgba(0, 0, 0, 0.08)",
+                    color: isGreen ? "#004400" : "#000000",
+                    fontWeight: 600,
+                    border: `1px solid ${isGreen ? "rgba(0, 0, 0, 0.2)" : "rgba(0, 0, 0, 0.15)"}`,
+                    fontFamily: "monospace",
+                  }}
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
           </div>
 
           {/* Actions - Editorial Buttons */}
@@ -195,13 +224,22 @@ function ProjectCard({
                   borderRadius: "20px",
                   fontSize: "clamp(0.75rem, 2vw, 0.8125rem)",
                 fontWeight: 600,
-                backgroundColor: isGreen ? "#000000" : "#000000",
+                backgroundColor: isGreen ? "#004400" : "#000000",
                 color: isGreen ? "#FFFFFF" : "#FFFFFF",
                 textDecoration: "none",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
               }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.2 }}
+              whileHover={{ 
+                scale: 1.02,
+                y: -1,
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)"
+              }}
+              whileTap={{ 
+                scale: 0.98,
+                y: 1,
+                boxShadow: "0 1px 2px rgba(0, 0, 0, 0.1)"
+              }}
+              transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.15 }}
             >
               <ExternalLink style={{ width: "14px", height: "14px" }} />
               Live Demo
@@ -221,10 +259,19 @@ function ProjectCard({
                 color: textColor,
                 border: `1px solid ${isGreen ? "rgba(0, 0, 0, 0.2)" : "rgba(0, 0, 0, 0.15)"}`,
                 textDecoration: "none",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
               }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.2 }}
+              whileHover={{ 
+                scale: 1.02,
+                y: -1,
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
+              }}
+              whileTap={{ 
+                scale: 0.98,
+                y: 1,
+                boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)"
+              }}
+              transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.15 }}
             >
               <Github style={{ width: "14px", height: "14px" }} />
               Code
@@ -246,7 +293,7 @@ export default function Portfolio() {
   });
 
   return (
-    <section id="portfolio" className="relative bg-black py-12 sm:py-20 md:py-32">
+    <section id="portfolio" className="relative py-12 sm:py-20 md:py-32">
       <div className="container-custom section-padding">
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-start">
           {/* Left Section: Title & CTA */}
@@ -256,30 +303,43 @@ export default function Portfolio() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-8"
+              className="space-y-8 text-center lg:text-left"
             >
               {/* Tag */}
-              <div className="inline-block px-4 py-2 rounded-full border-2 border-[#B3F1AA]">
-                <span className="text-sm font-medium text-white">Portfolio</span>
+              <div className="inline-block px-4 py-2 rounded border-2 border-[#00ff00]/50 bg-black/50 backdrop-blur-sm font-mono" style={{ boxShadow: "0 0 20px rgba(0, 255, 0, 0.2)" }}>
+                <span className="text-sm font-medium text-[#00ff00]">$ const portfolio: IProject[] = [</span>
               </div>
 
               {/* Main Title */}
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
-                Expertise Spotlight,
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight font-mono mt-4">
+                <span className="text-[#00ff00]">const title = </span>
+                <span className="text-white">&apos;Expertise Spotlight,&apos;</span>
                 <br />
-                Showcasing Skills
+                <span className="text-white">&apos;Showcasing Skills&apos;</span>
                 <br />
-                Mastery
+                <span className="text-[#00ff00]">&apos;Mastery&apos;;</span>
               </h2>
 
               {/* CTA Button */}
               <motion.a
                 href="#contact"
-                className="inline-block px-6 py-3 sm:px-8 sm:py-4 bg-white rounded-full border-2 border-[#B3F1AA] text-black font-semibold text-sm sm:text-base hover:bg-[#B3F1AA] transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="inline-block px-6 py-3 sm:px-8 sm:py-4 bg-black/80 border-2 border-[#00ff00] rounded-full font-semibold text-sm sm:text-base text-[#00ff00] shadow-lg font-mono"
+                style={{ boxShadow: "0 0 20px rgba(0, 255, 0, 0.3)" }}
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -2,
+                  boxShadow: "0 0 30px rgba(0, 255, 0, 0.5)",
+                  backgroundColor: "#00ff00",
+                  color: "#000000",
+                }}
+                whileTap={{ 
+                  scale: 0.98,
+                  y: 2,
+                  boxShadow: "0 0 15px rgba(0, 255, 0, 0.3)"
+                }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
               >
-                Let&apos;s create
+                $ createProject()
               </motion.a>
             </motion.div>
           </div>

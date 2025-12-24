@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import React from "react";
 import "./globals.css";
 import ServiceWorker from "@/components/ServiceWorker";
+import TerminalBackgroundWrapper from "@/components/TerminalBackgroundWrapper";
 
 export const metadata: Metadata = {
   title: "Pham The Hien - Developer Portfolio",
@@ -73,8 +74,11 @@ export default function RootLayout({
         />
         <meta name="theme-color" content="#000000" />
       </head>
-      <body className="font-display antialiased">
-        {children}
+      <body className="font-display antialiased relative">
+        <TerminalBackgroundWrapper />
+        <div className="relative z-[10]">
+          {children}
+        </div>
         <ServiceWorker />
       </body>
     </html>

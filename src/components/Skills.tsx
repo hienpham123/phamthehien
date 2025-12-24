@@ -5,10 +5,6 @@ import { useRef } from "react";
 import { FaReact, FaJs, FaNode, FaGitAlt, FaHtml5, FaCss3Alt, FaAngular } from "react-icons/fa";
 import { SiNextdotjs, SiTypescript, SiThreedotjs, SiTailwindcss, SiMysql, SiPostgresql, SiMongodb } from "react-icons/si";
 
-// Simple SPFx icon component
-const SPFxIcon = ({ className }: { className?: string }) => (
-  <span className={className} style={{ fontFamily: "monospace", fontWeight: "bold" }}>SPFx</span>
-);
 
 // Skills với react-icons
 const skills = [
@@ -23,7 +19,7 @@ const skills = [
   { name: "HTML5", Icon: FaHtml5, bgColor: "#E34F26", textColor: "#FFFFFF" },
   { name: "CSS3", Icon: FaCss3Alt, bgColor: "#1572B6", textColor: "#FFFFFF" },
   { name: "Git", Icon: FaGitAlt, bgColor: "#F05032", textColor: "#FFFFFF" },
-  { name: "SPFx", Icon: SPFxIcon, bgColor: "#0078D4", textColor: "#FFFFFF" },
+  // { name: "SPFx", Icon: SiMicrosoftsharepoint, bgColor: "#0078D4", textColor: "#FFFFFF" },
   { name: "MySQL", Icon: SiMysql, bgColor: "#4479A1", textColor: "#FFFFFF" },
   { name: "PostgreSQL", Icon: SiPostgresql, bgColor: "#336791", textColor: "#FFFFFF" },
   { name: "MongoDB", Icon: SiMongodb, bgColor: "#47A248", textColor: "#FFFFFF" },
@@ -37,7 +33,7 @@ export default function Skills() {
   const duplicatedSkills = [...skills, ...skills];
 
   return (
-    <section id="skills" ref={ref} className="py-12 sm:py-20 md:py-32 relative bg-black overflow-hidden">
+    <section id="skills" ref={ref} className="py-12 sm:py-20 md:py-32 relative overflow-hidden">
       
       <div className="container-custom section-padding relative z-10">
         <motion.div
@@ -46,19 +42,25 @@ export default function Skills() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">
-            Skills
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 font-mono text-[#00ff00]">
+            $ const skills: string[] = [
           </h2>
           <motion.div 
-            className="w-24 h-1 bg-[#B3F1AA] mx-auto"
+            className="w-24 h-1 bg-[#00ff00] mx-auto"
             initial={{ width: 0 }}
             animate={isInView ? { width: 96 } : { width: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           />
+          <p className="text-gray-400 text-sm sm:text-base mt-4 font-mono">{'// Technology stack terminal'}</p>
         </motion.div>
 
+        {/* Terminal command */}
+        <div className="mb-6 text-center font-mono text-[#00ff00] text-sm">
+          $ npm list --depth=0 | grep -E &apos;react|typescript|spfx|tailwind&apos;
+        </div>
+
         {/* Horizontal Scrolling Container */}
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-hidden border-2 border-[#00ff00]/30 rounded-lg p-4 bg-black/50 backdrop-blur-sm" style={{ boxShadow: "0 0 20px rgba(0, 255, 0, 0.1)" }}>
           {/* Gradient fade edges */}
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
@@ -77,9 +79,10 @@ export default function Skills() {
                 : { x: 0 }
             }
             transition={{
-              duration: 30,
+              duration: 40,
               repeat: Infinity,
               ease: "linear",
+              willChange: "transform",
             }}
           >
             {duplicatedSkills.map((skill, index) => {
@@ -87,15 +90,19 @@ export default function Skills() {
               return (
                 <motion.div
                   key={`${skill.name}-${index}`}
-                  className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg transition-all cursor-pointer"
+                  className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg transition-all cursor-pointer border-2 border-[#00ff00]/20"
                   style={{
                     backgroundColor: skill.bgColor,
                     color: skill.textColor,
                     willChange: "auto",
                     opacity: 0.7,
+                    boxShadow: "0 0 10px rgba(0, 255, 0, 0.2)",
                   }}
                   whileHover={{ 
                     opacity: 1,
+                    scale: 1.1,
+                    borderColor: "#00ff00",
+                    boxShadow: "0 0 20px rgba(0, 255, 0, 0.4)",
                   }}
                   title={skill.name}
                 >

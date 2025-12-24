@@ -11,7 +11,7 @@ import ChatModal from "@/components/ChatModal";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen text-white relative z-[10]">
       <Header />
       <Hero />
       <About />

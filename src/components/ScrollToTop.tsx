@@ -35,13 +35,23 @@ export default function ScrollToTop() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0 }}
           onClick={scrollToTop}
-          className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 z-50 p-2.5 sm:p-3 rounded-full bg-[#B3F1AA] text-black shadow-lg hover:shadow-xl transition-shadow touch-manipulation"
+          className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 z-50 p-2.5 sm:p-3 rounded-full bg-[#B3F1AA] text-black shadow-lg touch-manipulation"
           style={{
             willChange: "transform",
             transform: "translate3d(0, 0, 0)",
+            boxShadow: "0 4px 6px rgba(179, 241, 170, 0.3)",
           }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          whileHover={{ 
+            scale: 1.1,
+            y: -2,
+            boxShadow: "0 6px 12px rgba(179, 241, 170, 0.4)"
+          }}
+          whileTap={{ 
+            scale: 0.95,
+            y: 2,
+            boxShadow: "0 2px 4px rgba(179, 241, 170, 0.3)"
+          }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
           aria-label="Scroll to top"
         >
           <ArrowUp className="w-5 h-5" />

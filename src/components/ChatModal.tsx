@@ -44,9 +44,21 @@ export default function ChatModal() {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#B3F1AA] text-black shadow-lg hover:shadow-xl transition-shadow flex items-center justify-center"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#B3F1AA] text-black shadow-lg flex items-center justify-center"
+        style={{
+          boxShadow: "0 4px 6px rgba(179, 241, 170, 0.3)",
+        }}
+        whileHover={{ 
+          scale: 1.1,
+          y: -2,
+          boxShadow: "0 6px 12px rgba(179, 241, 170, 0.4)"
+        }}
+        whileTap={{ 
+          scale: 0.95,
+          y: 2,
+          boxShadow: "0 2px 4px rgba(179, 241, 170, 0.3)"
+        }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
         aria-label="Open chat"
       >
         <MessageCircle className="w-6 h-6" />
@@ -166,9 +178,21 @@ export default function ChatModal() {
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full px-6 py-3 bg-[#B3F1AA] text-black rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-[#B3F1AA]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    className="w-full px-6 py-3 bg-[#B3F1AA] text-black rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-[#B3F1AA]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                    style={{
+                      boxShadow: "0 4px 6px rgba(179, 241, 170, 0.3)",
+                    }}
+                    whileHover={!isSubmitting ? { 
+                      scale: 1.02,
+                      y: -2,
+                      boxShadow: "0 6px 12px rgba(179, 241, 170, 0.4)"
+                    } : {}}
+                    whileTap={!isSubmitting ? { 
+                      scale: 0.98,
+                      y: 2,
+                      boxShadow: "0 2px 4px rgba(179, 241, 170, 0.3)"
+                    } : {}}
+                    transition={{ duration: 0.15, ease: "easeOut" }}
                   >
                     <Send className="w-5 h-5" />
                     {isSubmitting ? "Sending..." : "Send message"}

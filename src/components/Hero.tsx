@@ -85,21 +85,23 @@ export default function Hero() {
     <section ref={ref} id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16 sm:pt-20 pb-12 sm:pb-0">
       {/* Animated Background Elements with Parallax */}
       <div className="absolute inset-0 overflow-hidden">
+        {/* Optimized: Reduced blur and slower animation for better performance */}
         <motion.div
           style={{ 
             y: bgY1,
             willChange: "transform",
           }}
-          className="absolute top-1/4 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-white/5 rounded-full blur-2xl sm:blur-3xl"
+          className="absolute top-1/4 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-white/5 rounded-full blur-xl sm:blur-2xl"
           animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, 30, 0],
+            scale: [1, 1.15, 1],
+            x: [0, 30, 0],
+            y: [0, 20, 0],
           }}
           transition={{
-            duration: 20,
+            duration: 25,
             repeat: Infinity,
             ease: "easeInOut",
+            repeatDelay: 1,
           }}
         />
         <motion.div
@@ -107,16 +109,17 @@ export default function Hero() {
             y: bgY2,
             willChange: "transform",
           }}
-          className="absolute bottom-1/4 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-white/5 rounded-full blur-2xl sm:blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-white/5 rounded-full blur-xl sm:blur-2xl"
           animate={{
-            scale: [1, 1.3, 1],
-            x: [0, -50, 0],
-            y: [0, -30, 0],
+            scale: [1, 1.2, 1],
+            x: [0, -30, 0],
+            y: [0, -20, 0],
           }}
           transition={{
-            duration: 25,
+            duration: 30,
             repeat: Infinity,
             ease: "easeInOut",
+            repeatDelay: 1,
           }}
         />
       </div>
@@ -133,29 +136,42 @@ export default function Hero() {
       >
         <motion.div
           variants={itemVariants}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-[#B3F1AA]/30 mb-8 backdrop-blur-sm text-[#B3F1AA]"
-          whileHover={{ scale: 1.05, borderColor: "#B3F1AA" }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded border-2 border-[#00ff00]/50 bg-black/50 backdrop-blur-sm text-[#00ff00] mb-8 font-mono"
+          style={{
+            boxShadow: "0 0 20px rgba(0, 255, 0, 0.2)",
+          }}
+          whileHover={{ 
+            scale: 1.05, 
+            borderColor: "#00ff00",
+            boxShadow: "0 0 30px rgba(0, 255, 0, 0.4)",
+          }}
         >
           <motion.div
             animate={{ rotate: [0, 360] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            transition={{ 
+              duration: 30, 
+              repeat: Infinity, 
+              ease: "linear",
+              willChange: "transform",
+            }}
+            style={{ willChange: "transform" }}
           >
-            <Sparkles className="w-4 h-4" />
+            <Sparkles className="w-4 h-4 text-[#00ff00]" />
           </motion.div>
-          <span className="text-sm">{personalInfo.title}</span>
+          <span className="text-sm">$ whoami</span>
         </motion.div>
 
         <motion.h1
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-tight px-4"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-tight px-4 font-mono"
         >
           <motion.span
             variants={textRevealVariants}
             custom={0}
             initial="hidden"
             animate="visible"
-            className="block text-white"
+            className="block text-[#00ff00]"
           >
-            Hey, I&apos;m
+            $ console.log(&quot;Hey, I&apos;m&quot;)
           </motion.span>
           <motion.span className="block mt-2">
             {words.map((word, i) => (
@@ -166,7 +182,7 @@ export default function Hero() {
                 initial="hidden"
                 animate="visible"
                 className={`inline-block mr-3 ${
-                  i === words.length - 1 ? "text-[#B3F1AA]" : "text-white"
+                  i === words.length - 1 ? "text-[#00ff00]" : "text-white"
                 }`}
               >
                 {word}
@@ -177,8 +193,11 @@ export default function Hero() {
 
         <motion.p
           variants={itemVariants}
-          className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4"
+          className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4 font-mono"
         >
+          <span className="text-[#00ff00]">$ const description = </span>
+          <br />
+          <span className="text-[#00ff00]">&apos;</span>
           {typedDescription}
           {isTypingDescription && (
             <motion.span
@@ -188,7 +207,7 @@ export default function Hero() {
                 repeat: Infinity,
                 repeatType: "reverse",
               }}
-              className="inline-block ml-1 w-0.5 h-5 bg-[#B3F1AA] align-middle"
+              className="inline-block ml-1 w-0.5 h-5 bg-[#00ff00] align-middle"
             />
           )}
         </motion.p>
@@ -199,26 +218,50 @@ export default function Hero() {
         >
           <motion.a
             href="#portfolio"
-            className="px-6 py-3 sm:px-8 sm:py-4 bg-white text-black rounded-full font-semibold text-sm sm:text-base flex items-center gap-2 relative overflow-hidden group w-auto max-w-[280px] sm:max-w-none justify-center"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="px-6 py-3 sm:px-8 sm:py-4 bg-black/80 border-2 border-[#00ff00] rounded-full font-semibold text-sm sm:text-base flex items-center gap-2 relative overflow-hidden group w-auto max-w-[320px] sm:max-w-none justify-center shadow-lg font-mono text-[#00ff00]"
+            style={{ boxShadow: "0 0 20px rgba(0, 255, 0, 0.3)" }}
+            whileHover={{ 
+              scale: 1.05,
+              y: -2,
+              boxShadow: "0 0 30px rgba(0, 255, 0, 0.5)",
+              backgroundColor: "#00ff00",
+              color: "#000000",
+            }}
+            whileTap={{ 
+              scale: 0.98,
+              y: 2,
+              boxShadow: "0 0 15px rgba(0, 255, 0, 0.3)"
+            }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
           >
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-gray-200 to-white opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute inset-0 bg-[#00ff00] opacity-0 group-hover:opacity-100 transition-opacity"
             />
             <Code className="w-5 h-5 relative z-10" />
-            <span className="relative z-10">View Portfolio</span>
+            <span className="relative z-10 whitespace-nowrap">$ navigate(&apos;/portfolio&apos;)</span>
           </motion.a>
           <motion.a
             href="#contact"
-            className="px-6 py-3 sm:px-8 sm:py-4 border-2 border-[#B3F1AA] rounded-full font-semibold text-sm sm:text-base relative overflow-hidden group text-[#B3F1AA] w-auto max-w-[280px] sm:max-w-none justify-center"
-            whileHover={{ scale: 1.05, borderColor: "#B3F1AA", backgroundColor: "rgba(179, 31, 170, 0.1)" }}
-            whileTap={{ scale: 0.95 }}
+            className="px-6 py-3 sm:px-8 sm:py-4 border-2 border-[#00ff00] rounded-full font-semibold text-sm sm:text-base relative overflow-hidden group text-[#00ff00] w-auto max-w-[280px] sm:max-w-none justify-center shadow-lg font-mono bg-black/50"
+            style={{ boxShadow: "0 0 20px rgba(0, 255, 0, 0.2)" }}
+            whileHover={{ 
+              scale: 1.05,
+              y: -2,
+              borderColor: "#00ff00",
+              backgroundColor: "rgba(0, 255, 0, 0.1)",
+              boxShadow: "0 0 30px rgba(0, 255, 0, 0.4)"
+            }}
+            whileTap={{ 
+              scale: 0.98,
+              y: 2,
+              boxShadow: "0 0 15px rgba(0, 255, 0, 0.2)"
+            }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
           >
             <motion.div
-              className="absolute inset-0 bg-[#B3F1AA]/10 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute inset-0 bg-[#00ff00]/10 opacity-0 group-hover:opacity-100 transition-opacity"
             />
-            <span className="relative z-10">Say Hello</span>
+            <span className="relative z-10">$ handleContact()</span>
           </motion.a>
         </motion.div>
 
@@ -228,17 +271,18 @@ export default function Hero() {
         >
           <motion.a
             href="#about"
-            className="flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-colors group"
+            className="flex flex-col items-center gap-2 text-[#00ff00]/70 hover:text-[#00ff00] transition-colors group font-mono"
             animate={{ y: [0, 10, 0] }}
             transition={{
-              duration: 2,
+              duration: 3,
               repeat: Infinity,
               ease: "easeInOut",
+              repeatDelay: 0.5,
             }}
             whileHover={{ scale: 1.1 }}
           >
-            <span className="text-sm">Scroll down</span>
-            <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
+            <span className="text-sm">$ scrollTo(&apos;#about&apos;)</span>
+            <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform text-[#00ff00]" />
           </motion.a>
         </motion.div>
       </motion.div>
