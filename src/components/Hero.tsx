@@ -116,7 +116,7 @@ export default function Hero() {
             custom={0}
             className="block text-white"
           >
-            Hey, I'm
+            Hey, I&apos;m
           </motion.span>
           <motion.span className="block mt-2 overflow-hidden">
             {words.map((word, i) => (
