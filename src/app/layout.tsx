@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import React from "react";
 import "./globals.css";
+import ServiceWorker from "@/components/ServiceWorker";
 
 export const metadata: Metadata = {
   title: "Pham The Hien - Developer Portfolio",
@@ -10,16 +11,35 @@ export const metadata: Metadata = {
   creator: "Pham The Hien",
   openGraph: {
     title: "Pham The Hien - Developer Portfolio",
-    description: "Portfolio of Pham The Hien - Full Stack Developer",
+    description: "Portfolio of Pham The Hien - Full Stack Developer specializing in web development, mobile apps and modern technologies.",
     type: "website",
     locale: "en_US",
     siteName: "Pham The Hien Portfolio",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://phamthehien.netlify.app",
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://phamthehien.netlify.app"}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "Pham The Hien - Developer Portfolio",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Pham The Hien - Developer Portfolio",
-    description: "Portfolio of Pham The Hien - Full Stack Developer",
+    description: "Portfolio of Pham The Hien - Full Stack Developer specializing in web development, mobile apps and modern technologies.",
+    images: [`${process.env.NEXT_PUBLIC_SITE_URL || "https://phamthehien.netlify.app"}/og-image.png`],
   },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/manifest.json",
   robots: {
     index: true,
     follow: true,
@@ -51,9 +71,11 @@ export default function RootLayout({
           href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap"
           rel="stylesheet"
         />
+        <meta name="theme-color" content="#000000" />
       </head>
       <body className="font-display antialiased">
         {children}
+        <ServiceWorker />
       </body>
     </html>
   );

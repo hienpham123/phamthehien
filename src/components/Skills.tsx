@@ -38,7 +38,8 @@ export default function Skills() {
 
   return (
     <section id="skills" ref={ref} className="py-12 sm:py-20 md:py-32 relative bg-black overflow-hidden">
-      <div className="container-custom section-padding">
+      
+      <div className="container-custom section-padding relative z-10">
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
@@ -58,6 +59,10 @@ export default function Skills() {
 
         {/* Horizontal Scrolling Container */}
         <div className="relative overflow-hidden">
+          {/* Gradient fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+          
           <motion.div
             className="flex gap-6"
             style={{
@@ -87,6 +92,10 @@ export default function Skills() {
                     backgroundColor: skill.bgColor,
                     color: skill.textColor,
                     willChange: "auto",
+                    opacity: 0.7,
+                  }}
+                  whileHover={{ 
+                    opacity: 1,
                   }}
                   title={skill.name}
                 >

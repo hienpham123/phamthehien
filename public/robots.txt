@@ -1,0 +1,11 @@
+# robots.txt for Pham The Hien Portfolio
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://phamthehien.netlify.app/sitemap.xml
+
+# Disallow admin or private paths if any
+# Disallow: /admin/
+# Disallow: /private/
+

@@ -1,9 +1,10 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowDown, Code, Sparkles } from "lucide-react";
 import { useRef } from "react";
 import { personalInfo } from "@/config/personalInfo";
+import { useTyping } from "@/hooks/useTyping";
 
 export default function Hero() {
   const ref = useRef(null);
@@ -12,8 +13,24 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  // Smooth spring animation for better performance
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  // Optimized transforms with smooth easing
+  const y = useTransform(smoothProgress, [0, 1], ["0%", "50%"], {
+    clamp: false,
+  });
+  const opacity = useTransform(smoothProgress, [0, 0.7], [1, 0], {
+    clamp: true,
+  });
+  
+  // Background parallax transforms (moved outside JSX)
+  const bgY1 = useTransform(smoothProgress, [0, 1], ["0%", "30%"]);
+  const bgY2 = useTransform(smoothProgress, [0, 1], ["0%", "30%"]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -39,13 +56,13 @@ export default function Hero() {
   };
 
   const textRevealVariants = {
-    hidden: { opacity: 0, y: 100 },
+    hidden: { opacity: 0, y: 30 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
-        delay: 0.5 + i * 0.1,
-        duration: 0.8,
+        delay: 0.5 + i * 0.08,
+        duration: 0.5,
         ease: [0.22, 1, 0.36, 1],
       },
     }),
@@ -53,15 +70,25 @@ export default function Hero() {
 
   const words = personalInfo.name.split(" ");
 
+  // Calculate when title animation completes
+  const titleAnimationDuration = 0.5 + (words.length + 1) * 0.08 + 0.5;
+  const typingDelay = titleAnimationDuration * 1000 + 400; // Add 400ms buffer
+
+  // Typing effect for description
+  const { displayedText: typedDescription, isTyping: isTypingDescription } = useTyping({
+    text: personalInfo.description,
+    speed: 30,
+    delay: typingDelay,
+  });
+
   return (
     <section ref={ref} id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16 sm:pt-20 pb-12 sm:pb-0">
       {/* Animated Background Elements with Parallax */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           style={{ 
-            y,
+            y: bgY1,
             willChange: "transform",
-            transform: "translate3d(0, 0, 0)",
           }}
           className="absolute top-1/4 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-white/5 rounded-full blur-2xl sm:blur-3xl"
           animate={{
@@ -77,9 +104,8 @@ export default function Hero() {
         />
         <motion.div
           style={{ 
-            y: useTransform(scrollYProgress, [0, 1], ["0%", "30%"]),
+            y: bgY2,
             willChange: "transform",
-            transform: "translate3d(0, 0, 0)",
           }}
           className="absolute bottom-1/4 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-white/5 rounded-full blur-2xl sm:blur-3xl"
           animate={{
@@ -99,8 +125,6 @@ export default function Hero() {
         style={{ 
           y, 
           opacity,
-          willChange: "transform, opacity",
-          transform: "translate3d(0, 0, 0)",
         }}
         className="container-custom section-padding relative z-10 text-center"
         variants={containerVariants}
@@ -113,10 +137,6 @@ export default function Hero() {
           whileHover={{ scale: 1.05, borderColor: "#B3F1AA" }}
         >
           <motion.div
-            style={{
-              willChange: "transform",
-              transform: "translate3d(0, 0, 0)",
-            }}
             animate={{ rotate: [0, 360] }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
@@ -126,21 +146,25 @@ export default function Hero() {
         </motion.div>
 
         <motion.h1
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-tight overflow-hidden px-4"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-tight px-4"
         >
           <motion.span
             variants={textRevealVariants}
             custom={0}
+            initial="hidden"
+            animate="visible"
             className="block text-white"
           >
             Hey, I&apos;m
           </motion.span>
-          <motion.span className="block mt-2 overflow-hidden">
+          <motion.span className="block mt-2">
             {words.map((word, i) => (
               <motion.span
                 key={i}
                 variants={textRevealVariants}
                 custom={i + 1}
+                initial="hidden"
+                animate="visible"
                 className={`inline-block mr-3 ${
                   i === words.length - 1 ? "text-[#B3F1AA]" : "text-white"
                 }`}
@@ -155,7 +179,18 @@ export default function Hero() {
           variants={itemVariants}
           className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4"
         >
-          {personalInfo.description}
+          {typedDescription}
+          {isTypingDescription && (
+            <motion.span
+              animate={{ opacity: [1, 0] }}
+              transition={{
+                duration: 0.8,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              className="inline-block ml-1 w-0.5 h-5 bg-[#B3F1AA] align-middle"
+            />
+          )}
         </motion.p>
 
         <motion.div
@@ -194,10 +229,6 @@ export default function Hero() {
           <motion.a
             href="#about"
             className="flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-colors group"
-            style={{
-              willChange: "transform",
-              transform: "translate3d(0, 0, 0)",
-            }}
             animate={{ y: [0, 10, 0] }}
             transition={{
               duration: 2,
