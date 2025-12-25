@@ -67,7 +67,7 @@ export default function About() {
         >
           <motion.div variants={itemVariants} className="text-center mb-8 sm:mb-12 md:mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 font-mono text-[#00ff88]">
-              $ cat /proc/self/status | grep -E 'Name|Uid|Gid'
+              $ cat /proc/self/status | grep -E &apos;Name|Uid|Gid&apos;
             </h2>
             <motion.div
               className="w-24 h-1 bg-[#00ff88] mx-auto"
@@ -82,7 +82,7 @@ export default function About() {
 
           <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center mb-8 sm:mb-12 md:mb-16">
             <motion.div variants={itemVariants} className="order-2 md:order-1">
-              <div className="mb-4 font-mono text-[#00ff88] text-sm">$ cat ~/.bash_history | tail -50 | grep -E 'exploit|vulnerability|scan'</div>
+              <div className="mb-4 font-mono text-[#00ff88] text-sm">$ cat ~/.bash_history | tail -50 | grep -E &apos;exploit|vulnerability|scan&apos;</div>
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-white">
                 {personalInfo.title}
               </h3>
