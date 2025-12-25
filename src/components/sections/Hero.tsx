@@ -106,15 +106,15 @@ export default function Hero() {
       >
         <motion.div
           variants={itemVariants}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded border-2 border-[#00ff00]/50 bg-black/50 backdrop-blur-sm text-[#00ff00] mb-8 font-mono"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded border-2 border-[#00ff88]/50 bg-black/50 backdrop-blur-sm text-[#00ff88] mb-8 font-mono"
           style={{
-            boxShadow: "0 0 20px rgba(0, 255, 0, 0.2)",
+            boxShadow: "0 0 20px rgba(0, 255, 136, 0.2)",
             ...gpuOptimized,
           }}
           whileHover={{
             scale: 1.05,
             borderColor: COLORS.primary,
-            boxShadow: "0 0 30px rgba(0, 255, 0, 0.3)",
+            boxShadow: "0 0 30px rgba(0, 255, 136, 0.3)",
           }}
         >
           <motion.div
@@ -126,9 +126,9 @@ export default function Hero() {
               ease: "linear",
             }}
           >
-            <Sparkles className="w-4 h-4 text-[#00ff00]" />
+            <Sparkles className="w-4 h-4 text-[#00ff88]" />
           </motion.div>
-          <span className="text-sm">$ whoami</span>
+          <span className="text-sm">$ whoami && id</span>
         </motion.div>
 
         <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-tight px-4 font-mono">
@@ -137,7 +137,7 @@ export default function Hero() {
             custom={0}
             className="block text-white"
           >
-            Hey, I&apos;m
+            <span className="text-[#00ff88]/70">root@</span>pentester<span className="text-[#00ff88]">:~#</span>
           </motion.span>
           <motion.span className="block mt-2 overflow-hidden">
             {words.map((word, i) => (
@@ -148,7 +148,7 @@ export default function Hero() {
                 initial="hidden"
                 animate="visible"
                 className={`inline-block mr-3 ${
-                  i === words.length - 1 ? "text-[#00ff00]" : "text-white"
+                  i === words.length - 1 ? "text-[#00ff88]" : "text-white"
                 }`}
               >
                 {word}
@@ -161,7 +161,7 @@ export default function Hero() {
           variants={itemVariants}
           className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-3xl mx-auto mb-8 sm:mb-12 leading-relaxed px-4 font-mono"
         >
-          <span className="text-[#00ff00]">$ cat about.txt</span>
+          <span className="text-[#00ff88]">$ cat /etc/passwd | grep -v nologin</span>
           <br />
           <span className="text-white/80">{typedDescription}</span>
           <Cursor color={COLORS.primary} />
@@ -170,16 +170,16 @@ export default function Hero() {
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <motion.a
             href="#portfolio"
-            className="px-6 py-3 sm:px-8 sm:py-4 bg-black/80 border-2 border-[#00ff00] rounded-full font-semibold text-sm sm:text-base text-[#00ff00] shadow-lg font-mono flex items-center gap-2 relative overflow-hidden group w-auto max-w-[280px] sm:max-w-none justify-center"
+            className="px-6 py-3 sm:px-8 sm:py-4 bg-black/80 border-2 border-[#00ff88] rounded-full font-semibold text-sm sm:text-base text-[#00ff88] shadow-lg font-mono flex items-center gap-2 relative overflow-hidden group w-auto max-w-[280px] sm:max-w-none justify-center"
             style={{
-              boxShadow: "0 0 20px rgba(0, 255, 0, 0.3)",
+              boxShadow: "0 0 20px rgba(0, 255, 136, 0.3)",
               ...gpuOptimized,
             }}
             whileHover={{
               scale: 1.05,
               y: -2,
-              boxShadow: "0 0 30px rgba(0, 255, 0, 0.5)",
-              backgroundColor: "#00ff00",
+              boxShadow: "0 0 30px rgba(0, 255, 136, 0.5)",
+              backgroundColor: "#00ff88",
               color: "#000000",
             }}
             whileTap={{
@@ -191,22 +191,22 @@ export default function Hero() {
           >
             <Code className="w-5 h-5 relative z-10" />
             <span className="relative z-10">
-              <span className="text-[#00ff00]/50">$</span> explore projects
+              <span className="text-[#00ff88]/50">$</span> ls -la /root/exploits/
             </span>
           </motion.a>
           <motion.a
             href="#contact"
-            className="px-6 py-3 sm:px-8 sm:py-4 border-2 border-[#00ff00] rounded-full font-semibold text-sm sm:text-base relative overflow-hidden group text-[#00ff00] w-auto max-w-[280px] sm:max-w-none justify-center font-mono"
+            className="px-6 py-3 sm:px-8 sm:py-4 border-2 border-[#00ff88] rounded-full font-semibold text-sm sm:text-base relative overflow-hidden group text-[#00ff88] w-auto max-w-[280px] sm:max-w-none justify-center font-mono"
             style={{
-              boxShadow: "0 0 20px rgba(0, 255, 0, 0.2)",
+              boxShadow: "0 0 20px rgba(0, 255, 136, 0.2)",
               ...gpuOptimized,
             }}
             whileHover={{
               scale: 1.05,
               y: -2,
               borderColor: COLORS.primary,
-              backgroundColor: "rgba(0, 255, 0, 0.1)",
-              boxShadow: "0 0 30px rgba(0, 255, 0, 0.4)",
+              backgroundColor: "rgba(0, 255, 136, 0.1)",
+              boxShadow: "0 0 30px rgba(0, 255, 136, 0.4)",
             }}
             whileTap={{
               scale: 0.98,
@@ -215,10 +215,10 @@ export default function Hero() {
             transition={{ duration: 0.15, ease: "easeOut" }}
           >
             <motion.div
-              className="absolute inset-0 bg-[#00ff00]/10 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute inset-0 bg-[#00ff88]/10 opacity-0 group-hover:opacity-100 transition-opacity"
             />
             <span className="relative z-10">
-              <span className="text-[#00ff00]/50">&gt;</span> connect
+              <span className="text-[#00ff88]/50">&gt;</span> establish_connection()
             </span>
           </motion.a>
         </motion.div>
@@ -226,7 +226,7 @@ export default function Hero() {
         <motion.div variants={itemVariants} className="mt-20 flex justify-center">
           <motion.a
             href="#about"
-            className="flex flex-col items-center gap-2 text-[#00ff00]/70 hover:text-[#00ff00] transition-colors group font-mono"
+            className="flex flex-col items-center gap-2 text-[#00ff88]/70 hover:text-[#00ff88] transition-colors group font-mono"
             style={gpuOptimized}
             animate={{ y: [0, 10, 0] }}
             transition={{
@@ -237,9 +237,9 @@ export default function Hero() {
             whileHover={{ scale: 1.1 }}
           >
             <span className="text-sm">
-              <span className="text-[#00ff00]/50">→</span> discover more
+              <span className="text-[#00ff88]/50">→</span> continue_scan()
             </span>
-            <ArrowDown className="w-5 h-5 text-[#00ff00] group-hover:translate-y-1 transition-transform" />
+            <ArrowDown className="w-5 h-5 text-[#00ff88] group-hover:translate-y-1 transition-transform" />
           </motion.a>
         </motion.div>
       </motion.div>

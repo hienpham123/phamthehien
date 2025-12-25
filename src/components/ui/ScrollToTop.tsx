@@ -29,29 +29,31 @@ export default function ScrollToTop() {
     <AnimatePresence>
       {isVisible && (
         <motion.button
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0 }}
+          initial={{ opacity: 0, scale: 0, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0, y: 20 }}
           onClick={scrollToTop}
-          className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 z-50 p-2.5 sm:p-3 rounded-full bg-[#B3F1AA] text-black shadow-lg touch-manipulation"
+          className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 z-50 p-3 sm:p-3.5 rounded-lg bg-black/90 backdrop-blur-sm border-2 border-[#00ff88] text-[#00ff88] font-mono text-xs touch-manipulation"
           style={{
             ...gpuOptimized,
-            boxShadow: "0 4px 6px rgba(179, 241, 170, 0.3)",
+            boxShadow: "0 0 20px rgba(0, 255, 136, 0.3), inset 0 0 10px rgba(0, 255, 136, 0.1)",
           }}
           whileHover={{
-            scale: 1.1,
+            scale: 1.05,
             y: -2,
-            boxShadow: "0 6px 12px rgba(179, 241, 170, 0.4)",
+            borderColor: COLORS.primary,
+            backgroundColor: "rgba(0, 255, 136, 0.1)",
+            boxShadow: "0 0 30px rgba(0, 255, 136, 0.5), inset 0 0 15px rgba(0, 255, 136, 0.2)",
           }}
           whileTap={{
-            scale: 0.95,
+            scale: 0.98,
             y: 2,
-            boxShadow: "0 2px 4px rgba(179, 241, 170, 0.3)",
+            boxShadow: "0 0 15px rgba(0, 255, 136, 0.3), inset 0 0 8px rgba(0, 255, 136, 0.1)",
           }}
           transition={{ duration: 0.15, ease: "easeOut" }}
           aria-label="Scroll to top"
         >
-          <ArrowUp className="w-5 h-5" />
+          <ArrowUp className="w-4 h-4 sm:w-5 sm:h-5" />
         </motion.button>
       )}
     </AnimatePresence>

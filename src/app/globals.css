@@ -16,7 +16,51 @@
   }
   
   .gradient-text {
-    @apply bg-gradient-to-r from-white via-[#B3F1AA] to-[#B3F1AA] bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-white via-[#00ff88] to-[#00ff88] bg-clip-text text-transparent;
+  }
+  
+  .terminal-glow {
+    text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88, 0 0 30px #00ff88;
+  }
+  
+  .danger-glow {
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+  }
+  
+  .warning-glow {
+    text-shadow: 0 0 10px #ffaa00, 0 0 20px #ffaa00;
+  }
+  
+  .terminal-border {
+    border: 1px solid #00ff88;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.3), inset 0 0 10px rgba(0, 255, 136, 0.1);
+  }
+  
+  .scanline-effect {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .scanline-effect::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ff88, transparent);
+    animation: scanline 3s linear infinite;
+  }
+  
+  @keyframes scanline {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
   }
   
   .section-padding {
@@ -38,22 +82,25 @@ html {
   scroll-padding-top: 80px; /* Offset for fixed header */
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Hacking theme */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
   background: #000;
+  border-left: 1px solid rgba(0, 255, 0, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: rgba(0, 255, 0, 0.3);
   border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: rgba(0, 255, 0, 0.5);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
 }
 
 /* Performance optimizations for mobile */

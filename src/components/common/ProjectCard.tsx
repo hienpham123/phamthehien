@@ -44,9 +44,9 @@ export default function ProjectCard({
       style={{
         position: "sticky",
         top: 0,
-        height: "90vh",
+        height: "70vh",
         zIndex: index + 1,
-        marginTop: index === 0 ? "0" : "6vh",
+        marginTop: index === 0 ? "0" : "4vh",
       }}
       className="flex items-center"
     >
@@ -56,32 +56,32 @@ export default function ProjectCard({
           rotate: rotation,
           backgroundColor: bgColor,
           borderRadius: "16px 30px 30px 46px",
-          padding: "clamp(16px, 3vw, 24px)",
+          padding: "clamp(12px, 2.5vw, 18px)",
           boxShadow: "0 40px 120px rgba(0, 0, 0, 0.35)",
           ...gpuOptimized,
         }}
         transition={smoothTransition}
         className="w-full max-w-xl mx-auto"
       >
-        <div className="space-y-3">
+        <div className="space-y-2">
           {/* Terminal Header */}
           <div
-            className="flex items-center gap-2 mb-2 pb-2 border-b"
+            className="flex items-center gap-2 mb-1 pb-1 border-b"
             style={{ borderColor }}
           >
             <span
               className="text-xs font-mono font-semibold"
               style={{ color: isGreen ? COLORS.darkGreen : "#1a1a1a" }}
             >
-              val project_{String(index + 1).padStart(2, "0")}: Project = Project(
+              project_{String(index + 1).padStart(2, "0")} = {"{"}
             </span>
           </div>
 
           {/* Number & Title */}
-          <div className="flex items-start gap-3">
+          <div className="flex items-start gap-2">
             <span
               style={{
-                fontSize: "clamp(1.5rem, 4vw, 2rem)",
+                fontSize: "clamp(1.25rem, 3.5vw, 1.75rem)",
                 fontWeight: 800,
                 color: isGreen ? COLORS.darkGreen : "#1a1a1a",
                 lineHeight: 1,
@@ -90,16 +90,16 @@ export default function ProjectCard({
             >
               {String(index + 1).padStart(2, "0")}
             </span>
-            <div>
+            <div className="flex-1">
               <div
-                className="text-xs font-mono mb-1 font-semibold"
+                className="text-xs font-mono mb-0.5 font-semibold"
                 style={{ color: isGreen ? COLORS.darkGreen : "#1a1a1a" }}
               >
                 title:
               </div>
               <h3
                 style={{
-                  fontSize: "clamp(1.125rem, 3vw, 1.5rem)",
+                  fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
                   fontWeight: 800,
                   color: textColor,
                   lineHeight: 1.2,
@@ -115,7 +115,7 @@ export default function ProjectCard({
           {/* Description */}
           <div>
             <div
-              className="text-xs font-mono mb-1 font-semibold"
+              className="text-xs font-mono mb-0.5 font-semibold"
               style={{ color: isGreen ? COLORS.darkGreen : "#1a1a1a" }}
             >
               description:
@@ -123,13 +123,17 @@ export default function ProjectCard({
             <p
               style={{
                 color: textColor,
-                fontSize: "clamp(0.75rem, 2vw, 0.875rem)",
-                lineHeight: 1.6,
+                fontSize: "clamp(0.6875rem, 1.8vw, 0.75rem)",
+                lineHeight: 1.5,
                 fontWeight: 500,
-                marginTop: "0.5rem",
+                marginTop: "0.25rem",
                 fontFamily: "monospace",
-                paddingLeft: "1rem",
+                paddingLeft: "0.75rem",
                 borderLeft: `2px solid ${borderColor}`,
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
               }}
             >
               {project.description}
@@ -138,21 +142,21 @@ export default function ProjectCard({
           </div>
 
           {/* Tech Stack */}
-          <div className="mt-3">
+          <div className="mt-2">
             <div
-              className="text-xs font-mono mb-2 font-semibold"
+              className="text-xs font-mono mb-1 font-semibold"
               style={{ color: isGreen ? COLORS.darkGreen : "#1a1a1a" }}
             >
               tech_stack:
             </div>
-            <div className="flex flex-wrap gap-2">
-              {project.tech.map((tech: string) => (
+            <div className="flex flex-wrap gap-1.5">
+              {project.tech.slice(0, 4).map((tech: string) => (
                 <span
                   key={tech}
                   style={{
-                    padding: "4px 8px",
+                    padding: "3px 6px",
                     borderRadius: "4px",
-                    fontSize: "clamp(0.625rem, 1.5vw, 0.6875rem)",
+                    fontSize: "clamp(0.5625rem, 1.3vw, 0.625rem)",
                     backgroundColor: isGreen
                       ? "rgba(0, 0, 0, 0.08)"
                       : "rgba(0, 0, 0, 0.06)",
@@ -168,16 +172,16 @@ export default function ProjectCard({
           </div>
 
           {/* Actions */}
-          <div className="flex gap-2 mt-6">
+          <div className="flex gap-1.5 mt-3">
             <motion.a
               href={project.liveUrl}
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "6px",
-                padding: "8px 12px",
-                borderRadius: "20px",
-                fontSize: "clamp(0.75rem, 2vw, 0.8125rem)",
+                gap: "4px",
+                padding: "6px 10px",
+                borderRadius: "16px",
+                fontSize: "clamp(0.6875rem, 1.8vw, 0.75rem)",
                 fontWeight: 600,
                 backgroundColor: COLORS.black,
                 color: COLORS.white,
@@ -188,8 +192,8 @@ export default function ProjectCard({
               whileTap={{ scale: 0.98 }}
               transition={smoothTransition}
             >
-              <ExternalLink style={{ width: "14px", height: "14px" }} />
-              Live Demo
+              <ExternalLink style={{ width: "12px", height: "12px" }} />
+              Demo
             </motion.a>
 
             <motion.a
@@ -197,10 +201,10 @@ export default function ProjectCard({
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "6px",
-                padding: "8px 12px",
-                borderRadius: "20px",
-                fontSize: "clamp(0.75rem, 2vw, 0.8125rem)",
+                gap: "4px",
+                padding: "6px 10px",
+                borderRadius: "16px",
+                fontSize: "clamp(0.6875rem, 1.8vw, 0.75rem)",
                 fontWeight: 600,
                 backgroundColor: "transparent",
                 color: textColor,
@@ -212,7 +216,7 @@ export default function ProjectCard({
               whileTap={{ scale: 0.98 }}
               transition={smoothTransition}
             >
-              <Github style={{ width: "14px", height: "14px" }} />
+              <Github style={{ width: "12px", height: "12px" }} />
               Code
             </motion.a>
           </div>

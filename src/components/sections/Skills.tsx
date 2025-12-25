@@ -1,22 +1,44 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 import { skills } from "@/constants/skills";
 import { fadeInLeft } from "@/utils/animations";
-import { gpuOptimized } from "@/utils/styles";
+import { gpuOptimized, gpuOptimizedOpacity } from "@/utils/styles";
 import { COLORS } from "@/utils/constants";
 
 export default function Skills() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start center", "end center"],
+  });
+
+  // Smooth spring animation for better performance
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  // Opacity peaks in center region (0.15 to 0.85), fades at edges
+  const opacity = useTransform(smoothProgress, [0, 0.15, 0.85, 1], [0.3, 1, 1, 0.3], {
+    clamp: true,
+  });
 
   // Duplicate skills để tạo infinite scroll effect
   const duplicatedSkills = [...skills, ...skills];
 
   return (
     <section id="skills" ref={ref} className="py-12 sm:py-20 md:py-32 relative overflow-hidden">
-      <div className="container-custom section-padding relative z-10">
+      <motion.div
+        style={{
+          opacity,
+          ...gpuOptimizedOpacity,
+        }}
+        className="container-custom section-padding relative z-10"
+      >
         <motion.div
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -24,29 +46,29 @@ export default function Skills() {
           transition={{ duration: 0.8 }}
           className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 font-mono text-[#00ff00]">
-            {"var skills []string = []string{"}
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 font-mono text-[#00ff88]">
+            {"$ which nmap sqlmap burpsuite metasploit"}
           </h2>
           <motion.div
-            className="w-24 h-1 bg-[#00ff00] mx-auto"
+            className="w-24 h-1 bg-[#00ff88] mx-auto"
             initial={{ width: 0 }}
             animate={isInView ? { width: 96 } : { width: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           />
           <p className="text-gray-400 text-sm sm:text-base mt-4 font-mono">
-            {"// Technology stack terminal"}
+            {"// Security tools & exploit frameworks"}
           </p>
         </motion.div>
 
         {/* Terminal command */}
-        <div className="mb-6 text-center font-mono text-[#00ff00] text-sm">
-          $ go list -m all
+        <div className="mb-6 text-center font-mono text-[#00ff88] text-sm">
+          $ cat ~/.tools/arsenal.txt | head -20
         </div>
 
         {/* Horizontal Scrolling Container */}
         <div
-          className="relative overflow-hidden border-2 border-[#00ff00]/30 rounded-lg p-4 bg-black/50 backdrop-blur-sm"
-          style={{ boxShadow: "0 0 20px rgba(0, 255, 0, 0.1)" }}
+          className="relative overflow-hidden border-2 border-[#00ff88]/30 rounded-lg p-4 bg-black/50 backdrop-blur-sm"
+          style={{ boxShadow: "0 0 20px rgba(0, 255, 136, 0.1)" }}
         >
           {/* Gradient fade edges */}
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
@@ -73,19 +95,19 @@ export default function Skills() {
               return (
                 <motion.div
                   key={`${skill.name}-${index}`}
-                  className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg transition-all cursor-pointer border-2 border-[#00ff00]/20"
+                  className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg transition-all cursor-pointer border-2 border-[#00ff88]/20"
                   style={{
                     backgroundColor: skill.bgColor,
                     color: skill.textColor,
                     opacity: 0.7,
-                    boxShadow: "0 0 10px rgba(0, 255, 0, 0.2)",
+                    boxShadow: "0 0 10px rgba(0, 255, 136, 0.2)",
                     ...gpuOptimized,
                   }}
                   whileHover={{
                     opacity: 1,
                     scale: 1.1,
                     borderColor: COLORS.primary,
-                    boxShadow: "0 0 20px rgba(0, 255, 0, 0.4)",
+                    boxShadow: "0 0 20px rgba(0, 255, 136, 0.4)",
                   }}
                   title={skill.name}
                 >
@@ -95,7 +117,7 @@ export default function Skills() {
             })}
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

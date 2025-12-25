@@ -70,7 +70,7 @@ export default function Header() {
       transition={smoothTransition}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-black/90 backdrop-blur-xl border-b-2 border-[#00ff00]/30 shadow-lg"
+          ? "bg-black/90 backdrop-blur-xl border-b-2 border-[#00ff88]/30 shadow-lg"
           : "bg-transparent"
       }`}
       style={
@@ -92,11 +92,11 @@ export default function Header() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span className="relative z-10 text-[#00ff00]">
-              $ {personalInfo.name.toLowerCase().replace(/\s+/g, "_")}
+            <span className="relative z-10 text-[#00ff88]">
+              root@{personalInfo.name.toLowerCase().replace(/\s+/g, "")}<span className="text-[#00ff88]/70">:~#</span>
             </span>
             <motion.span
-              className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#00ff00]"
+              className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#00ff88]"
               whileHover={{ width: "100%" }}
               transition={{ duration: 0.3 }}
             />
@@ -109,17 +109,17 @@ export default function Header() {
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
-                className="text-sm font-medium text-white/80 hover:text-[#00ff00] transition-colors relative group font-mono"
+                className="text-sm font-medium text-white/80 hover:text-[#00ff88] transition-colors relative group font-mono"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 style={gpuOptimized}
                 whileHover={{ scale: 1.05 }}
               >
-                <span className="text-[#00ff00]/70">$ </span>
+                <span className="text-[#00ff88]/70">$ </span>
                 {item.name.toLowerCase()}
                 <motion.span
-                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#00ff00] group-hover:w-full transition-all duration-300"
+                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#00ff88] group-hover:w-full transition-all duration-300"
                 />
               </motion.a>
             ))}
@@ -146,19 +146,19 @@ export default function Header() {
                   className="flex flex-col gap-1.5"
                 >
                   <motion.div
-                    className="h-0.5 bg-[#00ff00] rounded-full"
+                    className="h-0.5 bg-[#00ff88] rounded-full"
                     initial={{ width: "24px" }}
                     animate={{ width: "24px", rotate: 45, y: 6 }}
                     transition={{ duration: 0.2 }}
                   />
                   <motion.div
-                    className="h-0.5 bg-[#00ff00] rounded-full"
+                    className="h-0.5 bg-[#00ff88] rounded-full"
                     initial={{ width: "24px" }}
                     animate={{ width: 0, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   />
                   <motion.div
-                    className="h-0.5 bg-[#00ff00] rounded-full"
+                    className="h-0.5 bg-[#00ff88] rounded-full"
                     initial={{ width: "24px" }}
                     animate={{ width: "24px", rotate: -45, y: -6 }}
                     transition={{ duration: 0.2 }}
@@ -174,19 +174,19 @@ export default function Header() {
                   className="flex flex-col gap-1.5"
                 >
                   <motion.div
-                    className="h-0.5 bg-[#00ff00] rounded-full"
+                    className="h-0.5 bg-[#00ff88] rounded-full"
                     initial={{ width: "20px" }}
                     animate={{ width: "20px" }}
                     transition={{ duration: 0.2 }}
                   />
                   <motion.div
-                    className="h-0.5 bg-[#00ff00] rounded-full"
+                    className="h-0.5 bg-[#00ff88] rounded-full"
                     initial={{ width: "24px" }}
                     animate={{ width: "24px" }}
                     transition={{ duration: 0.2 }}
                   />
                   <motion.div
-                    className="h-0.5 bg-[#00ff00] rounded-full"
+                    className="h-0.5 bg-[#00ff88] rounded-full"
                     initial={{ width: "16px" }}
                     animate={{ width: "16px" }}
                     transition={{ duration: 0.2 }}
@@ -205,13 +205,13 @@ export default function Header() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden mt-4 pb-4 border-t-2 border-[#00ff00]/30 overflow-hidden bg-black/80 backdrop-blur-sm rounded-lg font-mono"
+              className="md:hidden mt-4 pb-4 border-t-2 border-[#00ff88]/30 overflow-hidden bg-black/80 backdrop-blur-sm rounded-lg font-mono"
               style={{
                 boxShadow: "0 0 20px rgba(0, 255, 0, 0.2)",
                 ...gpuOptimized,
               }}
             >
-              <div className="px-4 py-2 text-xs text-[#00ff00]/70 border-b border-[#00ff00]/20">
+              <div className="px-4 py-2 text-xs text-[#00ff88]/70 border-b border-[#00ff88]/20">
                 $ menu --mobile
               </div>
               {navItems.map((item, index) => (
@@ -219,7 +219,7 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   onClick={(e) => handleSmoothScroll(e, item.href)}
-                  className="block py-3 px-4 text-sm font-medium text-white hover:text-[#00ff00] transition-colors relative group border-b border-[#00ff00]/10 last:border-b-0 cursor-pointer"
+                  className="block py-3 px-4 text-sm font-medium text-white hover:text-[#00ff88] transition-colors relative group border-b border-[#00ff88]/10 last:border-b-0 cursor-pointer"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -235,23 +235,23 @@ export default function Header() {
                     backgroundColor: "rgba(0, 255, 0, 0.1)",
                   }}
                 >
-                  <span className="text-[#00ff00]/70 mr-2">&gt;</span>
+                  <span className="text-[#00ff88]/70 mr-2">&gt;</span>
                   <span className="relative z-10">{item.name.toLowerCase()}</span>
                   <motion.div
-                    className="absolute left-0 top-0 bottom-0 w-0 bg-[#00ff00]/10 group-hover:w-full transition-all duration-300"
+                    className="absolute left-0 top-0 bottom-0 w-0 bg-[#00ff88]/10 group-hover:w-full transition-all duration-300"
                   />
                 </motion.a>
               ))}
-              <div className="px-4 py-2 text-xs text-[#00ff00]/50 mt-2">{"# Navigation terminal"}</div>
+              <div className="px-4 py-2 text-xs text-[#00ff88]/50 mt-2">{"# Navigation terminal"}</div>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
 
       {/* Progress Bar */}
-      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#00ff00]/20">
+      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#00ff88]/20">
         <motion.div
-          className="h-full bg-[#00ff00]"
+          className="h-full bg-[#00ff88]"
           style={{
             width: progressWidth,
             willChange: "width",

@@ -11,13 +11,18 @@ const config: Config = {
       colors: {
         background: "#000000",
         foreground: "#ffffff",
-        primary: "#B3F1AA",
+        primary: "#00ff88",
         secondary: "#1a1a1a",
-        accent: "#ffffff",
+        accent: "#00ff88",
+        danger: "#ff0000",
+        warning: "#ffaa00",
+        info: "#00aaff",
+        success: "#00ff88",
+        exploit: "#ff0080",
         brand: {
-          DEFAULT: "#B3F1AA",
-          400: "#B3F1AA",
-          500: "#B3F1AA",
+          DEFAULT: "#00ff88",
+          400: "#00ff88",
+          500: "#00ff88",
         },
       },
       fontFamily: {

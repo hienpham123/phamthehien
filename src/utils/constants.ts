@@ -1,12 +1,24 @@
-// Color constants
+// Color constants - Hacking/Cybersecurity Theme
 export const COLORS = {
-  primary: "#00ff00",
-  primaryGreen: "#B3F1AA",
-  lightGreen: "#B9F7A5",
-  darkGreen: "#004400",
+  // Terminal green (primary) - Less harsh, more readable
+  primary: "#00ff88",
+  primaryGreen: "#00ff88",
+  lightGreen: "#33ffaa",
+  darkGreen: "#00cc66",
+  
+  // Hacking theme colors
+  danger: "#ff0000",      // Red for warnings/errors
+  warning: "#ffaa00",     // Orange for alerts
+  info: "#00aaff",        // Cyan for information
+  success: "#00ff88",     // Green for success
+  exploit: "#ff0080",     // Magenta for exploits
+  
+  // Base colors
   black: "#000000",
   white: "#FFFFFF",
   offWhite: "#E8E8E5",
+  
+  // Terminal grays
   gray: {
     50: "#F5F5F5",
     100: "#E8E8E8",
@@ -16,8 +28,8 @@ export const COLORS = {
     500: "#808080",
     600: "#606060",
     700: "#404040",
-    800: "#202020",
-    900: "#101010",
+    800: "#1a1a1a",      // Darker for terminal feel
+    900: "#0a0a0a",      // Almost black
   },
 } as const;
 

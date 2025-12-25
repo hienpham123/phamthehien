@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 import { User, Target, Rocket } from "lucide-react";
 import { personalInfo } from "@/config/personalInfo";
@@ -36,17 +36,25 @@ export default function About() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end start"],
+    offset: ["start center", "end center"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0]);
+  // Smooth spring animation for better performance
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  // Opacity peaks in center region (0.15 to 0.85), fades at edges
+  const opacity = useTransform(smoothProgress, [0, 0.15, 0.85, 1], [0.3, 1, 1, 0.3], {
+    clamp: true,
+  });
 
   return (
     <section ref={ref} id="about" className="py-12 sm:py-20 md:py-32 relative overflow-hidden">
       <motion.div
         style={{
-          y,
           opacity,
           ...gpuOptimizedOpacity,
         }}
@@ -58,31 +66,31 @@ export default function About() {
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.div variants={itemVariants} className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 font-mono text-[#00ff00]">
-              $ use about::personal_info;
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 font-mono text-[#00ff88]">
+              $ cat /proc/self/status | grep -E 'Name|Uid|Gid'
             </h2>
             <motion.div
-              className="w-24 h-1 bg-[#00ff00] mx-auto"
+              className="w-24 h-1 bg-[#00ff88] mx-auto"
               initial={{ width: 0 }}
               animate={isInView ? { width: 96 } : { width: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             />
             <p className="text-gray-400 text-sm sm:text-base mt-4 font-mono">
-              {"// Personal information terminal"}
+              {"// System information dump"}
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center mb-8 sm:mb-12 md:mb-16">
             <motion.div variants={itemVariants} className="order-2 md:order-1">
-              <div className="mb-4 font-mono text-[#00ff00] text-sm">$ std::fs::read_to_string(&quot;about.txt&quot;).unwrap()</div>
+              <div className="mb-4 font-mono text-[#00ff88] text-sm">$ cat ~/.bash_history | tail -50 | grep -E 'exploit|vulnerability|scan'</div>
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-white">
                 {personalInfo.title}
               </h3>
-              <p className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4 pl-4 border-l-2 border-[#00ff00]/30">
+              <p className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4 pl-4 border-l-2 border-[#00ff88]/30">
                 {personalInfo.about.paragraph1}
                 <Cursor color={COLORS.primary} />
               </p>
-              <p className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed pl-4 border-l-2 border-[#00ff00]/30">
+              <p className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed pl-4 border-l-2 border-[#00ff88]/30">
                 {personalInfo.about.paragraph2}
                 <Cursor color={COLORS.primary} />
               </p>
@@ -110,9 +118,9 @@ export default function About() {
             {features.map((item, index) => (
               <motion.div
                 key={item.title}
-                className="p-6 rounded border-2 border-[#00ff00]/40 bg-black/70 backdrop-blur-sm hover:border-[#00ff00] transition-all relative overflow-hidden group font-mono"
+                className="p-6 rounded border-2 border-[#00ff88]/40 bg-black/70 backdrop-blur-sm hover:border-[#00ff88] transition-all relative overflow-hidden group font-mono"
                 style={{
-                  boxShadow: "0 0 20px rgba(0, 255, 0, 0.15)",
+                  boxShadow: "0 0 20px rgba(0, 255, 136, 0.15)",
                   ...gpuOptimizedOpacity,
                 }}
                 initial={{ opacity: 0, y: 50 }}
@@ -121,19 +129,19 @@ export default function About() {
                 whileHover={{
                   y: -8,
                   scale: 1.02,
-                  boxShadow: "0 0 30px rgba(0, 255, 0, 0.3)",
+                  boxShadow: "0 0 30px rgba(0, 255, 136, 0.3)",
                 }}
               >
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-[#00ff00]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute inset-0 bg-gradient-to-br from-[#00ff88]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
                 />
-                <div className="text-[#00ff00] text-xs mb-2">
-                  $ println!(&quot;{item.title}&quot;)
+                <div className="text-[#00ff88] text-xs mb-2">
+                  $ echo &quot;{item.title}&quot; | base64
                 </div>
                 <h4 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3 relative z-10 text-white">
                   {item.title}
                 </h4>
-                <p className="text-sm sm:text-base text-white/90 relative z-10 leading-relaxed pl-4 border-l-2 border-[#00ff00]/30">
+                <p className="text-sm sm:text-base text-white/90 relative z-10 leading-relaxed pl-4 border-l-2 border-[#00ff88]/30">
                   {item.description}
                   <Cursor color={COLORS.primary} />
                 </p>
