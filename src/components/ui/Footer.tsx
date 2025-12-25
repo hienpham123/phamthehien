@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { personalInfo } from "@/config/personalInfo";
+import { gpuOptimized } from "@/utils/styles";
+import { COLORS } from "@/utils/constants";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -18,15 +20,12 @@ export default function Footer() {
           className="text-center font-mono"
         >
           <div className="text-[#00ff00]/70 text-sm sm:text-base px-4 space-y-2">
-            <p className="text-[#00ff00]">$ const Footer: React.FC = () =&gt; {'{'}</p>
+            <p className="text-[#00ff00]">$ def footer() -&gt; None:</p>
             <p>© {currentYear} {personalInfo.name}. All rights reserved.</p>
             <p className="flex items-center justify-center gap-1 sm:gap-2">
               <span>Made with</span>
               <motion.span
-                style={{
-                  willChange: "transform",
-                  transform: "translate3d(0, 0, 0)",
-                }}
+                style={gpuOptimized}
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 1, repeat: Infinity }}
               >
@@ -34,10 +33,11 @@ export default function Footer() {
               </motion.span>
               <span>by {personalInfo.name}</span>
             </p>
-            <p className="text-[#00ff00]/50 text-xs mt-4">{'}; // Component exported'}</p>
+            <p className="text-[#00ff00]/50 text-xs mt-4">{"# Component exported"}</p>
           </div>
         </motion.div>
       </div>
     </footer>
   );
 }
+

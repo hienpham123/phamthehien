@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import React from "react";
 import "./globals.css";
 import ServiceWorker from "@/components/ServiceWorker";
-import TerminalBackgroundWrapper from "@/components/TerminalBackgroundWrapper";
+import TerminalBackgroundWrapper from "@/components/ui/TerminalBackgroundWrapper";
 
 export const metadata: Metadata = {
   title: "Pham The Hien - Developer Portfolio",

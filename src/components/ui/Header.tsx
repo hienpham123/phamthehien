@@ -2,8 +2,10 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { Menu, X } from "lucide-react";
 import { personalInfo } from "@/config/personalInfo";
+import { gpuOptimized } from "@/utils/styles";
+import { smoothTransition } from "@/utils/animations";
+import { COLORS } from "@/utils/constants";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -18,22 +20,18 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const rafRef = useRef<number>();
-  const lastScrollY = useRef(0);
 
-  // Transform scroll progress to percentage (0-100%)
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
-  // Throttled scroll handler for better mobile performance
+  // Throttled scroll handler
   useEffect(() => {
     const handleScroll = () => {
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
-      
+
       rafRef.current = requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY;
-        setIsScrolled(currentScrollY > 50);
-        lastScrollY.current = currentScrollY;
+        setIsScrolled(window.scrollY > 50);
       });
     };
 
@@ -48,39 +46,41 @@ export default function Header() {
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    
-    // Close mobile menu first
     setIsMobileMenuOpen(false);
-    
-    // Small delay to allow menu to close smoothly before scrolling
+
     setTimeout(() => {
       const element = document.querySelector(href);
       if (element) {
-        const headerHeight = 80; // Approximate header height
+        const headerHeight = 80;
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
 
         window.scrollTo({
           top: offsetPosition,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
-    }, 300); // Wait for menu close animation to complete
+    }, 300);
   };
 
   return (
     <motion.header
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      transition={smoothTransition}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
           ? "bg-black/90 backdrop-blur-xl border-b-2 border-[#00ff00]/30 shadow-lg"
           : "bg-transparent"
       }`}
-      style={isScrolled ? {
-        boxShadow: "0 0 20px rgba(0, 255, 0, 0.1)",
-      } : {}}
+      style={
+        isScrolled
+          ? {
+              boxShadow: "0 0 20px rgba(0, 255, 0, 0.1)",
+              ...gpuOptimized,
+            }
+          : gpuOptimized
+      }
     >
       <nav className="container-custom section-padding py-3 sm:py-4">
         <div className="flex items-center justify-between">
@@ -88,10 +88,13 @@ export default function Header() {
             href="#home"
             onClick={(e) => handleSmoothScroll(e, "#home")}
             className="text-lg sm:text-xl font-bold tracking-tight relative group font-mono"
+            style={gpuOptimized}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span className="relative z-10 text-[#00ff00]">$ {personalInfo.name.toLowerCase().replace(/\s+/g, '_')}</span>
+            <span className="relative z-10 text-[#00ff00]">
+              $ {personalInfo.name.toLowerCase().replace(/\s+/g, "_")}
+            </span>
             <motion.span
               className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#00ff00]"
               whileHover={{ width: "100%" }}
@@ -110,6 +113,7 @@ export default function Header() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
+                style={gpuOptimized}
                 whileHover={{ scale: 1.05 }}
               >
                 <span className="text-[#00ff00]/70">$ </span>
@@ -126,6 +130,7 @@ export default function Header() {
             className="md:hidden p-2 relative z-50"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
+            style={gpuOptimized}
             whileHover={{ scale: 1.1, y: -1 }}
             whileTap={{ scale: 0.9, y: 1 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
@@ -192,7 +197,7 @@ export default function Header() {
           </motion.button>
         </div>
 
-        {/* Mobile Menu - Terminal Style */}
+        {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
@@ -203,6 +208,7 @@ export default function Header() {
               className="md:hidden mt-4 pb-4 border-t-2 border-[#00ff00]/30 overflow-hidden bg-black/80 backdrop-blur-sm rounded-lg font-mono"
               style={{
                 boxShadow: "0 0 20px rgba(0, 255, 0, 0.2)",
+                ...gpuOptimized,
               }}
             >
               <div className="px-4 py-2 text-xs text-[#00ff00]/70 border-b border-[#00ff00]/20">
@@ -218,11 +224,12 @@ export default function Header() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ delay: index * 0.1, duration: 0.3 }}
-                  whileHover={{ 
+                  style={gpuOptimized}
+                  whileHover={{
                     x: 5,
                     backgroundColor: "rgba(0, 255, 0, 0.05)",
                   }}
-                  whileTap={{ 
+                  whileTap={{
                     scale: 0.98,
                     x: 8,
                     backgroundColor: "rgba(0, 255, 0, 0.1)",
@@ -235,19 +242,17 @@ export default function Header() {
                   />
                 </motion.a>
               ))}
-              <div className="px-4 py-2 text-xs text-[#00ff00]/50 mt-2">
-                {'// Navigation terminal'}
-              </div>
+              <div className="px-4 py-2 text-xs text-[#00ff00]/50 mt-2">{"# Navigation terminal"}</div>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
-      
-      {/* Progress Bar - Terminal Style */}
+
+      {/* Progress Bar */}
       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#00ff00]/20">
         <motion.div
           className="h-full bg-[#00ff00]"
-          style={{ 
+          style={{
             width: progressWidth,
             willChange: "width",
             transform: "translate3d(0, 0, 0)",
@@ -258,3 +263,4 @@ export default function Header() {
     </motion.header>
   );
 }
+

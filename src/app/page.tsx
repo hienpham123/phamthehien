@@ -1,13 +1,12 @@
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Portfolio from "@/components/Portfolio";
-import Testimonials from "@/components/Testimonials";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import ScrollToTop from "@/components/ScrollToTop";
-import ChatModal from "@/components/ChatModal";
+import Header from "@/components/ui/Header";
+import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import Skills from "@/components/sections/Skills";
+import Portfolio from "@/components/sections/Portfolio";
+import Testimonials from "@/components/sections/Testimonials";
+import Contact from "@/components/sections/Contact";
+import Footer from "@/components/ui/Footer";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 
 export default function Home() {
   return (
@@ -21,7 +20,6 @@ export default function Home() {
       <Contact />
       <Footer />
       <ScrollToTop />
-      {/* <ChatModal /> */}
     </main>
   );
 }
