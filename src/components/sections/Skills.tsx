@@ -95,23 +95,29 @@ export default function Skills() {
               return (
                 <motion.div
                   key={`${skill.name}-${index}`}
-                  className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg transition-all cursor-pointer border-2 border-[#00ff88]/20"
+                  className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg flex items-center justify-center cursor-pointer border-2 border-[#00ff88] bg-black/90 backdrop-blur-sm text-[#00ff88]"
                   style={{
-                    backgroundColor: skill.bgColor,
-                    color: skill.textColor,
                     opacity: 0.7,
-                    boxShadow: "0 0 10px rgba(0, 255, 136, 0.2)",
+                    boxShadow: "0 0 20px rgba(0, 255, 136, 0.3), inset 0 0 10px rgba(0, 255, 136, 0.1)",
                     ...gpuOptimized,
                   }}
                   whileHover={{
                     opacity: 1,
-                    scale: 1.1,
+                    scale: 1.05,
+                    y: -2,
                     borderColor: COLORS.primary,
-                    boxShadow: "0 0 20px rgba(0, 255, 136, 0.4)",
+                    backgroundColor: "rgba(0, 255, 136, 0.1)",
+                    boxShadow: "0 0 30px rgba(0, 255, 136, 0.5), inset 0 0 15px rgba(0, 255, 136, 0.2)",
                   }}
+                  whileTap={{
+                    scale: 0.98,
+                    y: 2,
+                    boxShadow: "0 0 15px rgba(0, 255, 136, 0.3), inset 0 0 8px rgba(0, 255, 136, 0.1)",
+                  }}
+                  transition={{ duration: 0.15, ease: "easeOut" }}
                   title={skill.name}
                 >
-                  <IconComponent className="text-2xl sm:text-3xl" />
+                  <IconComponent className="text-2xl sm:text-3xl" style={{ filter: "drop-shadow(0 0 3px currentColor)" }} />
                 </motion.div>
               );
             })}
