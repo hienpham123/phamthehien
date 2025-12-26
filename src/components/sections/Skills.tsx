@@ -117,7 +117,9 @@ export default function Skills() {
                   transition={{ duration: 0.15, ease: "easeOut" }}
                   title={skill.name}
                 >
-                  <IconComponent className="text-2xl sm:text-3xl" style={{ filter: "drop-shadow(0 0 3px currentColor)" }} />
+                  <span style={{ filter: "drop-shadow(0 0 3px currentColor)" }}>
+                    <IconComponent className="text-2xl sm:text-3xl" />
+                  </span>
                 </motion.div>
               );
             })}
