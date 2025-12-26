@@ -6,6 +6,7 @@ import { testimonials } from "@/constants/testimonials";
 import TestimonialCard from "@/components/common/TestimonialCard";
 import { fadeInLeft } from "@/utils/animations";
 import { gpuOptimizedOpacity } from "@/utils/styles";
+import { useTyping } from "@/hooks/useTyping";
 
 export default function Testimonials() {
   const ref = useRef(null);
@@ -22,9 +23,17 @@ export default function Testimonials() {
     restDelta: 0.001,
   });
 
-  // Opacity peaks in center region (0.15 to 0.85), fades at edges
-  const opacity = useTransform(smoothProgress, [0, 0.15, 0.85, 1], [0.3, 1, 1, 0.3], {
+  // Opacity peaks in center region (0.05 to 0.95), fades at edges
+  const opacity = useTransform(smoothProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0], {
     clamp: true,
+  });
+
+  // Typing effect for title
+  const titleText = "$ journalctl -u security.service | grep -E 'SUCCESS|BREACH'";
+  const { displayedText: typedTitle } = useTyping({
+    text: titleText,
+    speed: 30,
+    delay: isInView ? 200 : 0,
   });
 
   return (
@@ -44,7 +53,7 @@ export default function Testimonials() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 font-mono text-[#00ff88]">
-            $ journalctl -u security.service | grep -E &apos;SUCCESS|BREACH&apos;
+            {isInView ? typedTitle : titleText}
           </h2>
           <div className="w-24 h-1 bg-[#00ff88] mx-auto mb-4"></div>
           <p className="text-gray-400 text-lg font-mono">{"# Security audit logs & verified access"}</p>

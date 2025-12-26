@@ -9,6 +9,7 @@ import Cursor from "@/components/common/Cursor";
 import { containerVariants, itemVariants } from "@/utils/animations";
 import { gpuOptimizedOpacity } from "@/utils/styles";
 import { COLORS } from "@/utils/constants";
+import { useTyping } from "@/hooks/useTyping";
 
 const stats = [
   { icon: User, label: "Projects Completed", value: 50, suffix: "+" },
@@ -46,9 +47,17 @@ export default function About() {
     restDelta: 0.001,
   });
 
-  // Opacity peaks in center region (0.15 to 0.85), fades at edges
-  const opacity = useTransform(smoothProgress, [0, 0.15, 0.85, 1], [0.3, 1, 1, 0.3], {
+  // Opacity peaks in center region (0.05 to 0.95), fades at edges
+  const opacity = useTransform(smoothProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0], {
     clamp: true,
+  });
+
+  // Typing effect for title
+  const titleText = "$ cat /proc/self/status | grep -E 'Name|Uid|Gid'";
+  const { displayedText: typedTitle } = useTyping({
+    text: titleText,
+    speed: 30,
+    delay: isInView ? 200 : 0,
   });
 
   return (
@@ -67,7 +76,7 @@ export default function About() {
         >
           <motion.div variants={itemVariants} className="text-center mb-8 sm:mb-12 md:mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 font-mono text-[#00ff88]">
-              $ cat /proc/self/status | grep -E &apos;Name|Uid|Gid&apos;
+              {isInView ? typedTitle : titleText}
             </h2>
             <motion.div
               className="w-24 h-1 bg-[#00ff88] mx-auto"

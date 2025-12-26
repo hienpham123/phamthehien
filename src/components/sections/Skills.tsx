@@ -6,6 +6,7 @@ import { skills } from "@/constants/skills";
 import { fadeInLeft } from "@/utils/animations";
 import { gpuOptimized, gpuOptimizedOpacity } from "@/utils/styles";
 import { COLORS } from "@/utils/constants";
+import { useTyping } from "@/hooks/useTyping";
 
 export default function Skills() {
   const ref = useRef(null);
@@ -22,9 +23,17 @@ export default function Skills() {
     restDelta: 0.001,
   });
 
-  // Opacity peaks in center region (0.15 to 0.85), fades at edges
-  const opacity = useTransform(smoothProgress, [0, 0.15, 0.85, 1], [0.3, 1, 1, 0.3], {
+  // Opacity peaks in center region (0.05 to 0.95), fades at edges
+  const opacity = useTransform(smoothProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0], {
     clamp: true,
+  });
+
+  // Typing effect for title
+  const titleText = "$ which nmap sqlmap burpsuite metasploit";
+  const { displayedText: typedTitle } = useTyping({
+    text: isInView ? titleText : "",
+    speed: 30,
+    delay: 200,
   });
 
   // Duplicate skills để tạo infinite scroll effect
@@ -47,7 +56,7 @@ export default function Skills() {
           className="text-center mb-8 sm:mb-12 md:mb-16"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 font-mono text-[#00ff88]">
-            {"$ which nmap sqlmap burpsuite metasploit"}
+            {isInView ? (typedTitle || "") : titleText}
           </h2>
           <motion.div
             className="w-24 h-1 bg-[#00ff88] mx-auto"

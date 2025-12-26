@@ -9,6 +9,7 @@ import emailjs from "@emailjs/browser";
 import { fadeInLeft } from "@/utils/animations";
 import { gpuOptimized, gpuOptimizedOpacity } from "@/utils/styles";
 import { COLORS } from "@/utils/constants";
+import { useTyping } from "@/hooks/useTyping";
 
 const contactInfo = [
   {
@@ -52,10 +53,19 @@ export default function Contact() {
     restDelta: 0.001,
   });
 
-  // Opacity peaks in center region (0.15 to 0.85), fades at edges
-  const opacity = useTransform(smoothProgress, [0, 0.15, 0.85, 1], [0.3, 1, 1, 0.3], {
+  // Opacity peaks in center region (0.05 to 0.95), fades at edges
+  const opacity = useTransform(smoothProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0], {
     clamp: true,
   });
+
+  // Typing effect for title
+  const titleText = "$ nc -lvp 4444 -e /bin/bash";
+  const { displayedText: typedTitle } = useTyping({
+    text: titleText,
+    speed: 30,
+    delay: isInView ? 200 : 0,
+  });
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -171,7 +181,7 @@ export default function Contact() {
           className="text-center mb-8 sm:mb-12 md:mb-16"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 font-mono text-[#00ff88]">
-            $ nc -lvp 4444 -e /bin/bash
+            {isInView ? typedTitle : titleText}
           </h2>
           <motion.div
             className="w-24 h-1 bg-[#00ff88] mx-auto mb-4 sm:mb-6"

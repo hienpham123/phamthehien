@@ -1,15 +1,18 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 import { useRef } from "react";
 import { projects } from "@/constants/projects";
 import ProjectCard from "@/components/common/ProjectCard";
 import { fadeInLeft } from "@/utils/animations";
 import { gpuOptimizedOpacity } from "@/utils/styles";
+import { useTyping } from "@/hooks/useTyping";
 
 export default function Portfolio() {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const isTitleInView = useInView(titleRef, { once: true, margin: "-100px" });
 
   // Scroll progress for section fade
   const { scrollYProgress: sectionProgress } = useScroll({
@@ -30,9 +33,39 @@ export default function Portfolio() {
     restDelta: 0.001,
   });
 
-  // Opacity peaks in center region (0.15 to 0.85), fades at edges
-  const sectionOpacity = useTransform(smoothSectionProgress, [0, 0.15, 0.85, 1], [0.3, 1, 1, 0.3], {
+  // Opacity peaks in center region (0.05 to 0.95), fades at edges
+  const sectionOpacity = useTransform(smoothSectionProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0], {
     clamp: true,
+  });
+
+  // Typing effects for title lines
+  const line1 = "$ cat /var/log/exploits.log | tail -1";
+  const line2 = '"Zero-Day Exploits"';
+  const line3 = '"Penetration Testing"';
+  const line4 = '"Security Research"';
+  
+  const { displayedText: typedLine1 } = useTyping({
+    text: line1,
+    speed: 30,
+    delay: isTitleInView ? 200 : 0,
+  });
+  
+  const { displayedText: typedLine2 } = useTyping({
+    text: line2,
+    speed: 30,
+    delay: isTitleInView ? 200 + line1.length * 30 + 300 : 0,
+  });
+  
+  const { displayedText: typedLine3 } = useTyping({
+    text: line3,
+    speed: 30,
+    delay: isTitleInView ? 200 + (line1.length + line2.length) * 30 + 600 : 0,
+  });
+  
+  const { displayedText: typedLine4 } = useTyping({
+    text: line4,
+    speed: 30,
+    delay: isTitleInView ? 200 + (line1.length + line2.length + line3.length) * 30 + 900 : 0,
   });
 
   return (
@@ -48,6 +81,7 @@ export default function Portfolio() {
           {/* Left Section: Title & CTA */}
           <div className="lg:sticky lg:top-32 h-fit z-10">
             <motion.div
+              ref={titleRef}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
@@ -62,13 +96,13 @@ export default function Portfolio() {
 
               {/* Main Title */}
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight font-mono mt-4">
-                <span className="text-[#00ff88]">$ cat /var/log/exploits.log | tail -1</span>
+                <span className="text-[#00ff88]">{isTitleInView ? typedLine1 : line1}</span>
                 <br />
-                <span className="text-white">&quot;Zero-Day Exploits&quot;</span>
+                <span className="text-white">{isTitleInView ? typedLine2 : line2}</span>
                 <br />
-                <span className="text-white">&quot;Penetration Testing&quot;</span>
+                <span className="text-white">{isTitleInView ? typedLine3 : line3}</span>
                 <br />
-                <span className="text-[#00ff88]">&quot;Security Research&quot;</span>
+                <span className="text-[#00ff88]">{isTitleInView ? typedLine4 : line4}</span>
               </h2>
 
               {/* CTA Button */}
@@ -99,7 +133,7 @@ export default function Portfolio() {
           <div
             ref={containerRef}
             className="relative mt-8 lg:mt-0"
-            style={{ height: `${projects.length * 80}vh` }}
+            style={{ height: `${projects.length * 70}vh` }}
           >
             {projects.map((project, index) => (
               <ProjectCard

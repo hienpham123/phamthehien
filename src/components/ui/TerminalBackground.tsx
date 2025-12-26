@@ -151,9 +151,11 @@ interface TerminalLine {
 
 export default function TerminalBackground() {
   const [lines, setLines] = useState<TerminalLine[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
   const glitchIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    setIsMounted(true);
     const generateLines = (): TerminalLine[] => {
       const newLines: TerminalLine[] = [];
       if (typeof window === "undefined") return newLines;
@@ -251,7 +253,7 @@ export default function TerminalBackground() {
 
       {/* Terminal lines */}
       <div className="absolute inset-0">
-        {lines.map((line) => (
+        {isMounted && lines.map((line) => (
           <div
             key={line.id}
             className="absolute font-mono text-xs sm:text-sm select-none terminal-line"

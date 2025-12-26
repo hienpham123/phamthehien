@@ -2,12 +2,17 @@
 
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
+import { useState, useEffect } from "react";
 import { personalInfo } from "@/config/personalInfo";
 import { gpuOptimized } from "@/utils/styles";
 import { COLORS } from "@/utils/constants";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const [currentYear, setCurrentYear] = useState(2024);
+  
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   return (
     <footer className="py-12 border-t border-[#00ff00]/20">
