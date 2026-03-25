@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     url: process.env.NEXT_PUBLIC_SITE_URL || "https://phamthehien.netlify.app",
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://phamthehien.netlify.app"}/og-image.png`,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://phamthehien.netlify.app"}/pth.jpg`,
         width: 1200,
         height: 630,
         alt: "Pham The Hien - Developer Portfolio",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Pham The Hien - Developer Portfolio",
     description: "Portfolio of Pham The Hien - Full Stack Developer specializing in web development, mobile apps and modern technologies.",
-    images: [`${process.env.NEXT_PUBLIC_SITE_URL || "https://phamthehien.netlify.app"}/og-image.png`],
+    images: [`${process.env.NEXT_PUBLIC_SITE_URL || "https://phamthehien.netlify.app"}/pth.jpg`],
   },
   icons: {
     icon: [
